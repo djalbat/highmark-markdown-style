@@ -2,19 +2,13 @@
 
 const bnf = `
 
-    document                ::=  ( declarations | ruleSet | error )+ ;
+    document                ::=  ( declaration | ruleSet | error )+ ;
 
     
-    declarations            ::=  declaration+ ;
-
-
-    ruleSet                 ::=  selectors declarationBlock ;
+    ruleSet                 ::=  selectors "{" ( declaration | ruleSet )+ "}" ;
 
 
     selectors               ::=  selector ( "," selector )* ;
-
-
-    declarationBlock        ::=  "{" declarations "}" ;
 
 
     declaration             ::=  [name] ":" values ";" ;

@@ -4,8 +4,8 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { parserUtilities } from "occam-parsers";
-import { MarkdownStyleLexer, MarkdownStyleParser } from "../index";  ///
 import { RowsDiv, ColumnDiv, ColumnsDiv, VerticalSplitterDiv } from "easy-layout";
+import { MarkdownStyle, MarkdownStyleLexer, MarkdownStyleParser } from "../index";  ///
 
 import SubHeading from "./view/subHeading";
 import BNFTextarea from "./view/textarea/bnf";
@@ -14,6 +14,8 @@ import LeftSizeableDiv from "./view/div/sizeable/left";
 import ParseTreeTextarea from "./view/textarea/parseTree";
 import MarkdownStyleTextarea from "./view/textarea/markdownStyle";
 import LexicalEntriesTextarea from "./view/textarea/lexicalEntries";
+
+import { EMPTY_STRING } from "./constants";
 
 const { bnf } = MarkdownStyleParser,
       { entries } = MarkdownStyleLexer,
@@ -37,13 +39,16 @@ class View extends Element {
     const tokens = lexer.tokenise(content),
           node = parser.parse(tokens);
 
-    let parseTree = null;
+    let css = EMPTY_STRING,
+        parseTree = null;
 
     if (node !== null) {
+      const markdownStyle = MarkdownStyle.fromNodeAndTokens(node, tokens);
+
+      css = markdownStyle.asCSS();
+
       parseTree = node.asParseTree(tokens);
     }
-
-    const css = ""; ///
 
     this.setCSS(css);
 
