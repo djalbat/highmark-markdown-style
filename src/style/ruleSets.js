@@ -16,6 +16,8 @@ export default class RuleSets {
     this.array.push(ruleSet);
   }
 
+  getLength() { return this.array.length; }
+
   asCSS() {
     const css = this.array.reduce((css, ruleSet) => {
       const ruleSetCSS = ruleSet.asCSS();
@@ -28,11 +30,18 @@ export default class RuleSets {
     return css;
   }
 
+  static fromNothing() {
+    const array = [],
+          ruleSets = new RuleSets(array);
+
+    return ruleSets;
+  }
+
   static fromNodeAndTokens(node, tokens) {
     const ruleSetNonTerminalNodes = ruleSetNonTerminalNodesQuery(node),
           array = ruleSetNonTerminalNodes.map((ruleSetNonTerminalNode) => {
             const node = ruleSetNonTerminalNode, ///
-                  ruleSet = RuleSet.fromNodeAndTokens(node, tokens);
+                  ruleSet = RuleSet.fromRuleSetsNodeAndTokens(RuleSets, node, tokens);
 
             return ruleSet;
           }),

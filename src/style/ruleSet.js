@@ -9,9 +9,14 @@ import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
 const selectorsNonTerminalNodeQuery = nodeQuery("/*/selectors");
 
 export default class RuleSet {
-  constructor(selectors, declarations) {
+  constructor(ruleSets, selectors, declarations) {
+    this.ruleSets = ruleSets;
     this.selectors = selectors;
     this.declarations = declarations;
+  }
+
+  getRuleSets() {
+    return this.ruleSets;
   }
 
   getSelectors() {
@@ -25,11 +30,17 @@ export default class RuleSet {
   asCSS() {
     let css = EMPTY_STRING;
 
-    const declarationsCSS = this.declarations.asCSS();
+    const declarationsLength = this.declarations.getLength(),
+          ruleSetsLength = this.ruleSets.getLength(),
+          length = declarationsLength + ruleSetsLength;
 
-    if (declarationsCSS !== EMPTY_STRING) {
-       css = `${this.selectors} {
+    if (length > 0) {
+      const declarationsCSS = this.declarations.asCSS(),
+            ruleSetsCSS = this.ruleSets.asCSS();
+
+      css = `${this.selectors} {
 ${declarationsCSS}}
+${ruleSetsCSS}
 
 `;
     }
@@ -37,17 +48,19 @@ ${declarationsCSS}}
     return css;
   }
 
-  static fromSelectorAndDeclarations(selector, declarations) {
-    const selectors = selector, ///
-          ruleSet = new RuleSet(selectors, declarations);
+  static fromRuleSetsSelectorAndDeclarations(RuleSets, selector, declarations) {
+    const ruleSets = RuleSets.fromNothing(),
+          selectors = selector, ///
+          ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
   }
 
-  static fromNodeAndTokens(node, tokens) {
-    const selectors = selectorsFromNodeAndTokens(node, tokens),
+  static fromRuleSetsNodeAndTokens(RuleSets, node, tokens) {
+    const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
+          selectors = selectorsFromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
-          ruleSet = new RuleSet(selectors, declarations);
+          ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
   }

@@ -23,7 +23,7 @@ export default class MarkdownStyle {
   static fromNodeTokensAndSelector(node, tokens, selector) {
     const declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          ruleSet = RuleSet.fromSelectorAndDeclarations(selector, declarations);
+          ruleSet = RuleSet.fromRuleSetsSelectorAndDeclarations(RuleSets, selector, declarations);
 
     ruleSets.pushRuleSet(ruleSet);
 
