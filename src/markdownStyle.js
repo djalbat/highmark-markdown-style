@@ -4,8 +4,6 @@ import RuleSet from "./style/ruleSet";
 import RuleSets from "./style/ruleSets";
 import Declarations from "./style/declarations";
 
-import { EMPTY_STRING } from "./constants";
-
 export default class MarkdownStyle {
   constructor(ruleSets) {
     this.ruleSets = ruleSets;
@@ -16,8 +14,7 @@ export default class MarkdownStyle {
   }
 
   asCSS() {
-    const indent = EMPTY_STRING,  ///
-          ruleSetsCSS = this.ruleSets.asCSS(indent),
+    const ruleSetsCSS = this.ruleSets.asCSS(),
           css = ruleSetsCSS;  ///
 
     return css;

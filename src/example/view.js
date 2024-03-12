@@ -110,7 +110,9 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `padding: 0;  
+  static initialMarkdownStyle = `paragraph {
+  padding: 0;  
+}
 `;
 
   static tagName = "div";

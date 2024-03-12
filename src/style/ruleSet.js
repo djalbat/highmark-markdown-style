@@ -4,7 +4,7 @@ import Declarations from "./declarations";
 
 import { nodeQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
-import { contentFromNodeAndTokens } from "../utilities/content";
+import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
 
 const selectorsNonTerminalNodeQuery = nodeQuery("/*/selectors");
 
@@ -22,14 +22,14 @@ export default class RuleSet {
     return this.declarations;
   }
 
-  asCSS(indent) {
+  asCSS() {
     let css = EMPTY_STRING;
 
-    const declarationsCSS = this.declarations.asCSS(indent);
+    const declarationsCSS = this.declarations.asCSS();
 
     if (declarationsCSS !== EMPTY_STRING) {
-       css = `${indent}${this.selectors} {
-${declarationsCSS}${indent}}
+       css = `${this.selectors} {
+${declarationsCSS}}
 
 `;
     }
@@ -55,7 +55,7 @@ ${declarationsCSS}${indent}}
 
 function selectorsFromNodeAndTokens(node, tokens) {
   const selectorsNonTerminalNode = selectorsNonTerminalNodeQuery(node),
-        selectorsNonTerminalNodeContent = contentFromNodeAndTokens(selectorsNonTerminalNode, tokens),
+        selectorsNonTerminalNodeContent = contentFromNonTerminalNodeAndTokens(selectorsNonTerminalNode, tokens),
         selectors = `${selectorsNonTerminalNodeContent}`;
 
   return selectors;

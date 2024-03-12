@@ -16,9 +16,9 @@ export default class RuleSets {
     this.array.push(ruleSet);
   }
 
-  asCSS(indent) {
+  asCSS() {
     const css = this.array.reduce((css, ruleSet) => {
-      const ruleSetCSS = ruleSet.asCSS(indent);
+      const ruleSetCSS = ruleSet.asCSS();
 
       css += ruleSetCSS;
 

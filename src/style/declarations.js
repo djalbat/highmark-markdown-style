@@ -12,11 +12,9 @@ export default class Declarations {
     this.array = array;
   }
 
-  someDeclaration(callback) { return this.array.some(callback); }
-
-  asCSS(indent) {
+  asCSS() {
     const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
-            const declarationCSS = declaration.asCSS(indent);
+            const declarationCSS = declaration.asCSS();
 
             declarationsCSS += declarationCSS;
 

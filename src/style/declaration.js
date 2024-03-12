@@ -1,7 +1,6 @@
 "use strict";
 
 import { nodeQuery } from "../utilities/query";
-import { TWO_SPACES } from "../constants";
 import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
 
 const nameTerminalNodeQuery = nodeQuery("/*/@name"),
@@ -21,10 +20,8 @@ export default class Declaration {
     return this.values;
   }
 
-  asCSS(indent) {
-    indent = indent + TWO_SPACES;
-
-    const css = `${indent}${this.name}: ${this.values};\n`;
+  asCSS() {
+    const css = `  ${this.name}: ${this.values};\n`;
 
     return css;
   }
