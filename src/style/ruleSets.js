@@ -1,20 +1,19 @@
 "use strict";
 
-import { Query } from "occam-query";
-
 import RuleSet from "./ruleSet";
 
+import { nodesQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
 
-const ruleSetQuery = Query.fromExpression("/*/ruleSet");
+const ruleSetNonTerminalNodesQuery = nodesQuery("/*/ruleSet");
 
 export default class RuleSets {
   constructor(array) {
     this.array = array;
   }
 
-  forEach(callback) {
-    this.array.forEach(callback);
+  pushRuleSet(ruleSet) {
+    this.array.push(ruleSet);
   }
 
   asCSS(indent) {
@@ -30,9 +29,9 @@ export default class RuleSets {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const ruleSetNodes = ruleSetQuery.execute(node),
-          array = ruleSetNodes.map((ruleSetNode) => {
-            const node = ruleSetNode, ///
+    const ruleSetNonTerminalNodes = ruleSetNonTerminalNodesQuery(node),
+          array = ruleSetNonTerminalNodes.map((ruleSetNonTerminalNode) => {
+            const node = ruleSetNonTerminalNode, ///
                   ruleSet = RuleSet.fromNodeAndTokens(node, tokens);
 
             return ruleSet;

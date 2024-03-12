@@ -1,18 +1,14 @@
 "use strict";
 
+import RuleSet from "./style/ruleSet";
 import RuleSets from "./style/ruleSets";
 import Declarations from "./style/declarations";
 
 import { EMPTY_STRING } from "./constants";
 
 export default class MarkdownStyle {
-  constructor(declarations, ruleSets) {
-    this.declarations = declarations;
+  constructor(ruleSets) {
     this.ruleSets = ruleSets;
-  }
-
-  getDeclarations() {
-    return this.declarations;
   }
 
   getRuleSets() {
@@ -20,18 +16,21 @@ export default class MarkdownStyle {
   }
 
   asCSS() {
-    const indent = EMPTY_STRING,
-          declarationsCSS = this.declarations.asCSS(indent),
+    const indent = EMPTY_STRING,  ///
           ruleSetsCSS = this.ruleSets.asCSS(indent),
-          css = `${declarationsCSS}${ruleSetsCSS}`;
+          css = ruleSetsCSS;  ///
 
     return css;
   }
 
-  static fromNodeAndTokens(node, tokens) {
+  static fromNodeTokensAndSelector(node, tokens, selector) {
     const declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          style = new MarkdownStyle(declarations, ruleSets);
+          ruleSet = RuleSet.fromSelectorAndDeclarations(selector, declarations);
+
+    ruleSets.pushRuleSet(ruleSet);
+
+    const style = new MarkdownStyle(ruleSets);
 
     return style;
   }

@@ -1,13 +1,12 @@
 "use strict";
 
-import { Query } from "occam-query";
-
 import Declarations from "./declarations";
 
+import { nodeQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
-import { contentFromQueryNodeAndTokens } from "../utilities/content";
+import { contentFromNodeAndTokens } from "../utilities/content";
 
-const selectorsQuery = Query.fromExpression("//selectors");
+const selectorsNonTerminalNodeQuery = nodeQuery("/*/selectors");
 
 export default class RuleSet {
   constructor(selectors, declarations) {
@@ -23,30 +22,10 @@ export default class RuleSet {
     return this.declarations;
   }
 
-  unshift(ruleSet) {
-    const declarations = ruleSet.getDeclarations();
-
-    this.declarations.unshift(declarations);
-  }
-
-  findMatchingRuleSet(ruleSets) {
-    const matchingRuleSet = ruleSets.find((ruleSet) => {
-      const selectors = ruleSet.getSelectors(),
-            selectorsMatch = (selectors === this.selectors),
-            ruleSetsMatch = selectorsMatch; ///
-
-      if (ruleSetsMatch) {
-        return true;
-      }
-    }) || null; ///
-
-    return matchingRuleSet;
-  }
-
   asCSS(indent) {
     let css = EMPTY_STRING;
 
-    const declarationsCSS = this.declarations.asCSS(null, indent);
+    const declarationsCSS = this.declarations.asCSS(indent);
 
     if (declarationsCSS !== EMPTY_STRING) {
        css = `${indent}${this.selectors} {
@@ -58,18 +37,26 @@ ${declarationsCSS}${indent}}
     return css;
   }
 
+  static fromSelectorAndDeclarations(selector, declarations) {
+    const selectors = selector, ///
+          ruleSet = new RuleSet(selectors, declarations);
+
+    return ruleSet;
+  }
+
   static fromNodeAndTokens(node, tokens) {
     const selectors = selectorsFromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
-          media = new RuleSet(selectors, declarations);
+          ruleSet = new RuleSet(selectors, declarations);
 
-    return media;
+    return ruleSet;
   }
 }
 
 function selectorsFromNodeAndTokens(node, tokens) {
-  const selectorsNodeContent = contentFromQueryNodeAndTokens(selectorsQuery, node, tokens),
-        selectors = `${selectorsNodeContent}`;
+  const selectorsNonTerminalNode = selectorsNonTerminalNodeQuery(node),
+        selectorsNonTerminalNodeContent = contentFromNodeAndTokens(selectorsNonTerminalNode, tokens),
+        selectors = `${selectorsNonTerminalNodeContent}`;
 
   return selectors;
 }

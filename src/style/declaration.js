@@ -1,41 +1,42 @@
 "use strict";
 
-import { Query } from "occam-query";
-
+import { nodeQuery } from "../utilities/query";
 import { TWO_SPACES } from "../constants";
-import { contentFromQueryNodeAndTokens } from "../utilities/content";
+import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
 
-const propertyNameQuery = Query.fromExpression("/*/propertyName"),
-      propertyValuesQuery = Query.fromExpression("/*/propertyValues");
+const nameTerminalNodeQuery = nodeQuery("/*/@name"),
+      valuesNonTerminalNodeQuery = nodeQuery("/*/values");
 
 export default class Declaration {
-  constructor(propertyValues, propertyName) {
-    this.propertyValues = propertyValues;
-    this.propertyName = propertyName;
+  constructor(name, values) {
+    this.name = name;
+    this.values = values;
   }
 
-  getPropertyValues() {
-    return this.propertyValues;
+  getName() {
+    return this.name;
   }
 
-  getPropertyName() {
-    return this.propertyName;
+  getValues() {
+    return this.values;
   }
 
   asCSS(indent) {
     indent = indent + TWO_SPACES;
 
-    const css = `${indent}${this.propertyName}: ${this.propertyValues};\n`;
+    const css = `${indent}${this.name}: ${this.values};\n`;
 
     return css;
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const propertyValuesContent = contentFromQueryNodeAndTokens(propertyValuesQuery, node, tokens),
-          propertyNameContent = contentFromQueryNodeAndTokens(propertyNameQuery, node, tokens),
-          propertyValues = propertyValuesContent, ///
-          propertyName = propertyNameContent, ///
-          declaration = new Declaration(propertyValues, propertyName);
+    const nameTerminalNode = nameTerminalNodeQuery(node),
+          valuesNonTerminalNode = valuesNonTerminalNodeQuery(node),
+          nameTerminalNodeContent = nameTerminalNode.getContent(),
+          valuesNonTerminalNodesContent = contentFromNonTerminalNodeAndTokens(valuesNonTerminalNode, tokens),
+          name = nameTerminalNodeContent, ///
+          values = valuesNonTerminalNodesContent, ///
+          declaration = new Declaration(name, values);
 
     return declaration;
   }

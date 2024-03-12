@@ -1,15 +1,11 @@
 "use strict";
 
-import { Query } from "occam-query";
-import { arrayUtilities } from "necessary";
-
 import Declaration from "./declaration";
 
+import { nodesQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
 
-const { forwardsForEach, backwardsForEach } = arrayUtilities;
-
-const declarationQuery = Query.fromExpression("/*/declaration");
+const declarationNonTerminalNodesQuery = nodesQuery("/*/declaration");
 
 export default class Declarations {
   constructor(array) {
@@ -17,10 +13,6 @@ export default class Declarations {
   }
 
   someDeclaration(callback) { return this.array.some(callback); }
-
-  forwardsForEachDeclaration(callback) { forwardsForEach(this.array, callback); }
-
-  backwardsForEachDeclaration(callback) { backwardsForEach(this.array, callback); }
 
   asCSS(indent) {
     const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
@@ -36,9 +28,9 @@ export default class Declarations {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const declarationNodes = declarationQuery.execute(node),
-          array = declarationNodes.map((declarationNode) => {
-            const node = declarationNode, ///
+    const declarationNonTerminalNodes = declarationNonTerminalNodesQuery(node),
+          array = declarationNonTerminalNodes.map((declarationNonTerminalNode) => {
+            const node = declarationNonTerminalNode, ///
                   declaration = Declaration.fromNodeAndTokens(node, tokens);
 
             return declaration;

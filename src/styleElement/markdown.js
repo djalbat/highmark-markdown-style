@@ -1,39 +1,24 @@
 "use strict";
 
 import StyleElement from "../styleElement";
+import MarkdownStyle from "../markdownStyle";
 
 import { EMPTY_STRING } from "../constants";
-import { createDOMElement } from "../styleElement";
 
 export default class MarkdownStyleElement extends StyleElement {
-  constructor(domElement, prepend) {
-    super(domElement);
-
-    this.prepend = prepend;
-  }
-
-  getPrepend() {
-    return this.prepend;
-  }
-
-  update(node, tokens) {
+  update(node, tokens, selector) {
     let css = EMPTY_STRING;
 
-    // if (node !== null) {
-    //   const context = {
-    //     tokens
-    //   };
-    //
-    //   css = node.asCSS(this.prepend, context);
-    // }
+    if (node !== null) {
+      const markdownStyle = MarkdownStyle.fromNodeTokensAndSelector(node, tokens, selector);
+
+      css = markdownStyle.asCSS();
+    }
 
     this.setCSS(css);
+
+    return css;
   }
 
-  static fromPrepend(prepend) {
-    const domElement = createDOMElement(),
-          markdownStyleElement = new MarkdownStyleElement(domElement, prepend);
-
-    return markdownStyleElement;
-  }
+  static fromNothing() { return StyleElement.fromNothing(MarkdownStyleElement); }
 }

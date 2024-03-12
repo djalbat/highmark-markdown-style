@@ -1,10 +1,6 @@
 "use strict";
 
-import withStyle from "easy-with-style";  ///
-
-import { EMPTY_STRING } from "./constants";
-
-const { renderStyle } = withStyle;
+import { HEAD, STYLE } from "./constants";
 
 export default class StyleElement {
   constructor(domElement) {
@@ -19,32 +15,37 @@ export default class StyleElement {
     this.domElement = domElement;
   }
 
-  getCSS() {
-    const innerHTML = this.domElement.innerHTML,
-          css = innerHTML;  //
+  getInnerHTML() {  return this.domElement.innerHTML; }
 
-    return css;
-  }
+  setInnerHTML(innerHTML) { this.domElement.innerHTML = innerHTML; }
 
   setCSS(css) {
     const innerHTML = `
 ${css}
 `;
 
-    this.domElement.innerHTML = innerHTML;
+    this.setInnerHTML(innerHTML);
   }
 
-  static fromNothing() {
+  static fromNothing(Class) {
+    if (Class === undefined) {
+      Class = StyleElement; ///
+    }
+
     const domElement = createDOMElement(),
-          styleElement = new StyleElement(domElement);
+          styleElement = new Class(domElement);
 
     return styleElement;
   }
 }
 
-export function createDOMElement() {
-  const style = EMPTY_STRING,
-        domElement = renderStyle(style);
+function createDOMElement() {
+  const headDOMElement = document.querySelector(HEAD),
+        styleDOMElement = document.createElement(STYLE);
+
+  headDOMElement.appendChild(styleDOMElement);
+
+  const domElement = styleDOMElement; ///
 
   return domElement;
 }
