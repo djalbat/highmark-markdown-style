@@ -13,8 +13,8 @@ export default class MarkdownStyle {
     return this.ruleSets;
   }
 
-  asCSS(selector) {
-    const ruleSetsCSS = this.ruleSets.asCSS(selector),
+  asCSS(selectors) {
+    const ruleSetsCSS = this.ruleSets.asCSS(selectors),
           css = ruleSetsCSS;  ///
 
     return css;

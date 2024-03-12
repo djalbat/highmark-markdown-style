@@ -2,9 +2,9 @@
 
 import { EMPTY_STRING } from "../constants";
 
-export function contentFromNonTerminalNodeAndTokens(nonTerminalNode, tokens) {
-  const firstSignificantToken = nonTerminalNode.getFirstSignificantToken(),
-        lastSignificantToken = nonTerminalNode.getLastSignificantToken(),
+export function contentFromNodeAndTokens(node, tokens) {
+  const firstSignificantToken = node.getFirstSignificantToken(),
+        lastSignificantToken = node.getLastSignificantToken(),
         firstToken = firstSignificantToken, ///
         lastToken = lastSignificantToken, ///
         firstTokenIndex = tokens.indexOf(firstToken),

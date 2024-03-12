@@ -14,7 +14,7 @@ const bnf = `
     declaration             ::=  [name] ":" values ";" ;
 
     
-    selector                ::=  [name] ( <NO_WHITESPACE>pseudoClass )? 
+    selector                ::=  [name] ( <NO_WHITESPACE>class )* ( <NO_WHITESPACE>pseudoClass )? 
     
                               |  pseudoClass
                               
@@ -22,6 +22,9 @@ const bnf = `
 
     
     values                  ::=  value+ ;
+
+    
+    class                   ::=  "."<NO_WHITESPACE>[name] ;
 
     
     pseudoClass             ::=  ":"<NO_WHITESPACE>[name] ;

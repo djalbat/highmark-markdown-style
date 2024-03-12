@@ -107,8 +107,7 @@ class View extends Element {
 
   static initialMarkdownStyle = `paragraph {
   margin: 0;
-}  
-
+}
 `;
 
   static tagName = "div";

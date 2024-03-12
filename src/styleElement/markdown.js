@@ -1,5 +1,6 @@
 "use strict";
 
+import Selectors from "../style/selectors";
 import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
 import MarkdownStyleLexer from "../markdownStyle/lexer";
@@ -12,14 +13,14 @@ const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
       markdownStyleParser = MarkdownStyleParser.fromNothing();
 
 export default class MarkdownStyleElement extends StyleElement {
-  constructor(domElement, selector) {
+  constructor(domElement, selectors) {
     super(domElement);
 
-    this.selector = selector;
+    this.selectors = selectors;
   }
 
-  getSelector() {
-    return selector;
+  getSelectors() {
+    return selectors;
   }
 
   update(markdownStyle) {
@@ -34,7 +35,7 @@ export default class MarkdownStyleElement extends StyleElement {
     if (node !== null) {
       const markdownStyle = MarkdownStyle.fromNodeAndTokens(node, tokens);
 
-      css = markdownStyle.asCSS(this.selector);
+      css = markdownStyle.asCSS(this.selectors);
     }
 
     this.setCSS(css);
@@ -42,11 +43,10 @@ export default class MarkdownStyleElement extends StyleElement {
     return css;
   }
 
-
-
-  static fromSelector(selector) {
-    const domElement = createDOMElement(),
-          markdownStyleElement = new MarkdownStyleElement(domElement, selector);
+  static fromSelectorsString(selectorString) {
+    const selectors = Selectors.fromSelectorsString(selectorString),
+          domElement = createDOMElement(),
+          markdownStyleElement = new MarkdownStyleElement(domElement, selectors);
 
     return markdownStyleElement;
   }

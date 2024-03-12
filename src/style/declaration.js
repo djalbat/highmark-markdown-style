@@ -1,7 +1,7 @@
 "use strict";
 
 import { nodeQuery } from "../utilities/query";
-import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
+import { contentFromNodeAndTokens } from "../utilities/content";
 
 const nameTerminalNodeQuery = nodeQuery("/*/@name"),
       valuesNonTerminalNodeQuery = nodeQuery("/*/values");
@@ -30,7 +30,7 @@ export default class Declaration {
     const nameTerminalNode = nameTerminalNodeQuery(node),
           valuesNonTerminalNode = valuesNonTerminalNodeQuery(node),
           nameTerminalNodeContent = nameTerminalNode.getContent(),
-          valuesNonTerminalNodesContent = contentFromNonTerminalNodeAndTokens(valuesNonTerminalNode, tokens),
+          valuesNonTerminalNodesContent = contentFromNodeAndTokens(valuesNonTerminalNode, tokens),
           name = nameTerminalNodeContent, ///
           values = valuesNonTerminalNodesContent, ///
           declaration = new Declaration(name, values);

@@ -1,12 +1,9 @@
 "use strict";
 
+import Selectors from "./selectors";
 import Declarations from "./declarations";
 
-import { nodeQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
-import { contentFromNonTerminalNodeAndTokens } from "../utilities/content";
-
-const selectorsNonTerminalNodeQuery = nodeQuery("/*/selectors");
 
 export default class RuleSet {
   constructor(ruleSets, selectors, declarations) {
@@ -28,25 +25,25 @@ export default class RuleSet {
   }
 
   asCSS(selectors) {
-    selectors = (this.selectors === EMPTY_STRING) ?
-                  selectors :
-                   `${selectors} ${this.selectors}`;
-
     let css = EMPTY_STRING;
 
-    const declarationsCSS = this.declarations.asCSS(),
-          ruleSetsCSS = this.ruleSets.asCSS(selectors);
+    const declarationsCSS = this.declarations.asCSS();
 
     if (declarationsCSS !== EMPTY_STRING) {
-      css = `${css}${selectors} {
+      selectors.forEachSelector((selector) => {
+        const outerSelector = selector, ///
+              outerSelectorCSS = outerSelector.asCSS();
+
+        this.selectors.forEachSelector((selector) => {
+          const innerSelector = selector, ///
+                innerSelectorCSS = innerSelector.asCSS();
+
+          css = `${outerSelectorCSS} ${innerSelectorCSS} {
 ${declarationsCSS}}
 
 `;
-    }
-
-    if (ruleSetsCSS !== EMPTY_STRING) {
-      css = `${css}${ruleSetsCSS}
-      `;
+        });
+      });
     }
 
     return css;
@@ -54,7 +51,7 @@ ${declarationsCSS}}
 
   static fromRuleSetsAndDeclarations(RuleSets, declarations) {
     const ruleSets = RuleSets.fromNothing(),
-          selectors = EMPTY_STRING, ///
+          selectors = Selectors.fromNothing(),
           ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
@@ -62,18 +59,10 @@ ${declarationsCSS}}
 
   static fromRuleSetsNodeAndTokens(RuleSets, node, tokens) {
     const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          selectors = selectorsFromNodeAndTokens(node, tokens),
+          selectors = Selectors.fromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
   }
-}
-
-function selectorsFromNodeAndTokens(node, tokens) {
-  const selectorsNonTerminalNode = selectorsNonTerminalNodeQuery(node),
-        selectorsNonTerminalNodeContent = contentFromNonTerminalNodeAndTokens(selectorsNonTerminalNode, tokens),
-        selectors = `${selectorsNonTerminalNodeContent}`;
-
-  return selectors;
 }
