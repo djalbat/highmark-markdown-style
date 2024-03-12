@@ -13,19 +13,19 @@ export default class MarkdownStyle {
     return this.ruleSets;
   }
 
-  asCSS() {
-    const ruleSetsCSS = this.ruleSets.asCSS(),
+  asCSS(selector) {
+    const ruleSetsCSS = this.ruleSets.asCSS(selector),
           css = ruleSetsCSS;  ///
 
     return css;
   }
 
-  static fromNodeTokensAndSelector(node, tokens, selector) {
+  static fromNodeAndTokens(node, tokens) {
     const declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          ruleSet = RuleSet.fromRuleSetsSelectorAndDeclarations(RuleSets, selector, declarations);
+          ruleSet = RuleSet.fromRuleSetsAndDeclarations(RuleSets, declarations);
 
-    ruleSets.pushRuleSet(ruleSet);
+    ruleSets.unshiftRuleSet(ruleSet);
 
     const style = new MarkdownStyle(ruleSets);
 

@@ -27,19 +27,17 @@ ${css}
     this.setInnerHTML(innerHTML);
   }
 
-  static fromNothing(Class) {
-    if (Class === undefined) {
-      Class = StyleElement; ///
-    }
+  remove() { this.domElement.remove(); }
 
+  static fromNothing() {
     const domElement = createDOMElement(),
-          styleElement = new Class(domElement);
+          styleElement = new StyleElement(domElement);
 
     return styleElement;
   }
 }
 
-function createDOMElement() {
+export function createDOMElement() {
   const headDOMElement = document.querySelector(HEAD),
         styleDOMElement = document.createElement(STYLE);
 

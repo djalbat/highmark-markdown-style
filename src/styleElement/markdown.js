@@ -4,15 +4,26 @@ import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
 
 import { EMPTY_STRING } from "../constants";
+import { createDOMElement } from "../styleElement";
 
 export default class MarkdownStyleElement extends StyleElement {
-  update(node, tokens, selector) {
+  constructor(domElement, selector) {
+    super(domElement);
+
+    this.selector = selector;
+  }
+
+  getSelector() {
+    return selector;
+  }
+
+  update(node, tokens) {
     let css = EMPTY_STRING;
 
     if (node !== null) {
-      const markdownStyle = MarkdownStyle.fromNodeTokensAndSelector(node, tokens, selector);
+      const markdownStyle = MarkdownStyle.fromNodeAndTokens(node, tokens);
 
-      css = markdownStyle.asCSS();
+      css = markdownStyle.asCSS(this.selector);
     }
 
     this.setCSS(css);
@@ -20,5 +31,12 @@ export default class MarkdownStyleElement extends StyleElement {
     return css;
   }
 
-  static fromNothing() { return StyleElement.fromNothing(MarkdownStyleElement); }
+
+
+  static fromSelector(selector) {
+    const domElement = createDOMElement(),
+          markdownStyleElement = new MarkdownStyleElement(domElement, selector);
+
+    return markdownStyleElement;
+  }
 }

@@ -27,30 +27,34 @@ export default class RuleSet {
     return this.declarations;
   }
 
-  asCSS() {
+  asCSS(selectors) {
+    selectors = (this.selectors === EMPTY_STRING) ?
+                  selectors :
+                   `${selectors} ${this.selectors}`;
+
     let css = EMPTY_STRING;
 
-    const declarationsLength = this.declarations.getLength(),
-          ruleSetsLength = this.ruleSets.getLength(),
-          length = declarationsLength + ruleSetsLength;
+    const declarationsCSS = this.declarations.asCSS(),
+          ruleSetsCSS = this.ruleSets.asCSS(selectors);
 
-    if (length > 0) {
-      const declarationsCSS = this.declarations.asCSS(),
-            ruleSetsCSS = this.ruleSets.asCSS();
-
-      css = `${this.selectors} {
+    if (declarationsCSS !== EMPTY_STRING) {
+      css = `${css}${selectors} {
 ${declarationsCSS}}
-${ruleSetsCSS}
 
 `;
+    }
+
+    if (ruleSetsCSS !== EMPTY_STRING) {
+      css = `${css}${ruleSetsCSS}
+      `;
     }
 
     return css;
   }
 
-  static fromRuleSetsSelectorAndDeclarations(RuleSets, selector, declarations) {
+  static fromRuleSetsAndDeclarations(RuleSets, declarations) {
     const ruleSets = RuleSets.fromNothing(),
-          selectors = selector, ///
+          selectors = EMPTY_STRING, ///
           ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;

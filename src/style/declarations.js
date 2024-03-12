@@ -12,8 +12,6 @@ export default class Declarations {
     this.array = array;
   }
 
-  getLength() { return this.array.length; }
-
   asCSS() {
     const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
             const declarationCSS = declaration.asCSS();

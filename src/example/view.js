@@ -15,8 +15,6 @@ import ParseTreeTextarea from "./view/textarea/parseTree";
 import MarkdownStyleTextarea from "./view/textarea/markdownStyle";
 import LexicalEntriesTextarea from "./view/textarea/lexicalEntries";
 
-import { PREVIEW_PANE_DIV_SELECTOR } from "./constants";
-
 const { bnf } = MarkdownStyleParser,
       { entries } = MarkdownStyleLexer,
       { rulesFromBNF } = parserUtilities;
@@ -36,10 +34,9 @@ class View extends Element {
           lexer = lexerFromLexicalEntries(lexicalEntries),
           parser =  parserFromRules(rules),
           content = markdownStyle, ///
-          selector = PREVIEW_PANE_DIV_SELECTOR,
           tokens = lexer.tokenise(content),
           node = parser.parse(tokens),
-          css = markdownStyleElement.update(node, tokens, selector);
+          css = markdownStyleElement.update(node, tokens);
 
     let parseTree = null;
 
@@ -111,8 +108,9 @@ class View extends Element {
   }
 
   static initialMarkdownStyle = `paragraph {
-  padding: 0;  
-}
+  margin: 0;
+}  
+
 `;
 
   static tagName = "div";

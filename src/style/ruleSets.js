@@ -16,11 +16,13 @@ export default class RuleSets {
     this.array.push(ruleSet);
   }
 
-  getLength() { return this.array.length; }
+  unshiftRuleSet(ruleSet) {
+    this.array.unshift(ruleSet);
+  }
 
-  asCSS() {
+  asCSS(selectors) {
     const css = this.array.reduce((css, ruleSet) => {
-      const ruleSetCSS = ruleSet.asCSS();
+      const ruleSetCSS = ruleSet.asCSS(selectors);
 
       css += ruleSetCSS;
 
