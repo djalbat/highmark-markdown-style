@@ -7,21 +7,6 @@ import Textarea from "../textarea";
 import { DOUBLE_SPACE } from "../../constants";
 
 class LexicalEntriesTextarea extends Textarea {
-  getLexicalEntries() {
-    let lexicalEntries = {};
-
-    try {
-      const value = this.getValue(),
-            lexicalEntriesString = value; ///
-
-      lexicalEntries = JSON.parse(lexicalEntriesString);
-    } catch (error) {
-      ///
-    }
-
-    return lexicalEntries;
-  }
-
   setLexicalEntries(lexicalEntries) {
     const lexicalEntriesString = JSON.stringify(lexicalEntries, null, DOUBLE_SPACE),
           value = lexicalEntriesString; ///
@@ -30,11 +15,9 @@ class LexicalEntriesTextarea extends Textarea {
   }
 
   parentContext() {
-    const getLexicalEntries = this.getLexicalEntries.bind(this),
-          setLexicalEntries = this.setLexicalEntries.bind(this);
+    const setLexicalEntries = this.setLexicalEntries.bind(this);
 
     return ({
-      getLexicalEntries,
       setLexicalEntries
     });
   }

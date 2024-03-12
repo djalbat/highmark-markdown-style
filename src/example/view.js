@@ -3,7 +3,6 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { parserUtilities } from "occam-parsers";
 import { MarkdownStyleLexer, MarkdownStyleParser } from "../index";  ///
 import { RowsDiv, ColumnDiv, ColumnsDiv, VerticalSplitterDiv } from "easy-layout";
 
@@ -16,8 +15,10 @@ import MarkdownStyleTextarea from "./view/textarea/markdownStyle";
 import LexicalEntriesTextarea from "./view/textarea/lexicalEntries";
 
 const { bnf } = MarkdownStyleParser,
-      { entries } = MarkdownStyleLexer,
-      { rulesFromBNF } = parserUtilities;
+      { entries } = MarkdownStyleLexer;
+
+const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
+      markdownStyleParser = MarkdownStyleParser.fromNothing();
 
 class View extends Element {
   keyUpHandler = (event, element) => {
@@ -25,26 +26,23 @@ class View extends Element {
   }
 
   update() {
-    const bnf = this.getBNF(),
-          markdownStyle = this.getMarkdownStyle(),
-          lexicalEntries = this.getLexicalEntries(),
-          markdownStyleElement = this.getMarkdownStyleElement();
+    const markdownStyle = this.getMarkdownStyle(),
+          markdownStyleElement = this.getMarkdownStyleElement(),
+          css = markdownStyleElement.update(markdownStyle);
 
-    const rules = rulesFromBNF(bnf),
-          lexer = lexerFromLexicalEntries(lexicalEntries),
-          parser =  parserFromRules(rules),
-          content = markdownStyle, ///
-          tokens = lexer.tokenise(content),
-          node = parser.parse(tokens),
-          css = markdownStyleElement.update(node, tokens);
+    this.setCSS(css);
 
     let parseTree = null;
+
+    const lexer = markdownStyleLexer,
+          parser =  markdownStyleParser,
+          content = markdownStyle, ///
+          tokens = lexer.tokenise(content),
+          node = parser.parse(tokens);
 
     if (node !== null) {
       parseTree = node.asParseTree(tokens);
     }
-
-    this.setCSS(css);
 
     this.setParseTree(parseTree);
   }
@@ -129,16 +127,3 @@ export default withStyle(View)`
   padding: 1rem;
   
 `;
-
-function lexerFromLexicalEntries(lexicalEntries) {
-  const entries = lexicalEntries, ///
-        lexer = MarkdownStyleLexer.fromEntries(entries);
-
-  return lexer;
-}
-
-function parserFromRules(rules) {
-  const parser = MarkdownStyleParser.fromRules(rules); ///
-
-  return parser;
-}
