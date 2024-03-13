@@ -13,3 +13,5 @@ export default class MarkdownStyleParser extends CommonParser {
 
   static fromRules(rules) { return CommonParser.fromRules(MarkdownStyleParser, rules); }
 }
+
+export const markdownStyleParser = MarkdownStyleParser.fromNothing();

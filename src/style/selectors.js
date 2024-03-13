@@ -1,15 +1,14 @@
 "use strict";
 
 import Selector from "./selector";
-import MarkdownStyleLexer from "../markdownStyle/lexer";
-import MarkdownStyleParser from "../markdownStyle/parser";
 
+import { EMPTY_STRING } from "../constants";
+import { markdownStyleLexer } from "../markdownStyle/lexer";
+import { markdownStyleParser } from "../markdownStyle/parser";
+import { SELECTORS_RULE_NAME } from "../ruleNames";
 import { nodeQuery, nodesQuery } from "../utilities/query";
-import { EMPTY_STRING, SELECTORS_RULE_NAME } from "../constants";
 
-const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
-      markdownStyleParser = MarkdownStyleParser.fromNothing(),
-      selectorsNonTerminalNodeQuery = nodeQuery("/ruleSet/selectors"),
+const selectorsNonTerminalNodeQuery = nodeQuery("/ruleSet/selectors"),
       selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");
 
 const ruleMap = markdownStyleParser.getRuleMap(),

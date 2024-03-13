@@ -34,3 +34,5 @@ export default class MarkdownStyleLexer extends CommonLexer {
 
   static fromEntries(entries) { return CommonLexer.fromEntries(MarkdownStyleLexer, entries); }
 }
+
+export const markdownStyleLexer = MarkdownStyleLexer.fromNothing();

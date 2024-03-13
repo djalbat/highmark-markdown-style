@@ -105,7 +105,7 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `paragraph {
+  static initialMarkdownStyle = `:paragraph {
   margin: 0;
 }
 `;

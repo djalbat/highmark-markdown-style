@@ -3,14 +3,11 @@
 import Selectors from "../style/selectors";
 import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
-import MarkdownStyleLexer from "../markdownStyle/lexer";
-import MarkdownStyleParser from "../markdownStyle/parser";
 
 import { EMPTY_STRING } from "../constants";
 import { createDOMElement } from "../styleElement";
-
-const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
-      markdownStyleParser = MarkdownStyleParser.fromNothing();
+import { markdownStyleLexer } from "../markdownStyle/lexer";
+import { markdownStyleParser } from "../markdownStyle/parser";
 
 export default class MarkdownStyleElement extends StyleElement {
   constructor(domElement, selectors) {
