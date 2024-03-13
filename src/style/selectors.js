@@ -5,7 +5,7 @@ import MarkdownStyleLexer from "../markdownStyle/lexer";
 import MarkdownStyleParser from "../markdownStyle/parser";
 
 import { nodeQuery, nodesQuery } from "../utilities/query";
-import { SELECTORS_RULE_NAME } from "../constants";
+import { EMPTY_STRING, SELECTORS_RULE_NAME } from "../constants";
 
 const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
       markdownStyleParser = MarkdownStyleParser.fromNothing(),
@@ -21,11 +21,53 @@ export default class Selectors {
     this.array = array;
   }
 
+  getLength() { return this.array.length; }
+
+  reduceSelector(callback, initialValue) { return this.array.reduce(callback, initialValue); }
+
   forEachSelector(callback) { this.array.forEach(callback); }
 
-  static fromNothing() {
-    const array = [],
-          selectors = new Selectors(array);
+  combine(selectors) {
+    const outerSelectors = Selectors.fromArray(this.array), ///
+          innerSelectors = selectors, ///
+          array = outerSelectors.reduceSelector((array, outerSelector) => {
+            innerSelectors.forEachSelector((innerSelector) => {
+              const selector = outerSelector.combine(innerSelector);
+
+              array.push(selector);
+            });
+
+            return array;
+          }, []);
+
+    selectors = Selectors.fromArray(array);
+
+    return selectors;
+  }
+
+  asCSS() {
+    let css = EMPTY_STRING;
+
+    const length = this.getLength();
+
+    if (length > 0) {
+      css = this.array.reduce((css, selector) => {
+        const selectorCSS = selector.asCSS();
+
+        css = (css === null) ?
+                selectorCSS : ///
+                  `${css},
+${selectorCSS}`;
+
+        return css;
+      }, null);
+    }
+
+    return css;
+  }
+
+  static fromArray(array) {
+    const selectors = new Selectors(array);
 
     return selectors;
   }

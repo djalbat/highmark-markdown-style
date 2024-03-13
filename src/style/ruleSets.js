@@ -12,22 +12,26 @@ export default class RuleSets {
     this.array = array;
   }
 
-  pushRuleSet(ruleSet) {
-    this.array.push(ruleSet);
-  }
-
-  unshiftRuleSet(ruleSet) {
-    this.array.unshift(ruleSet);
-  }
+  getLength() { return this.array.length; }
 
   asCSS(selectors) {
-    const css = this.array.reduce((css, ruleSet) => {
-      const ruleSetCSS = ruleSet.asCSS(selectors);
+    let css = EMPTY_STRING;
 
-      css += ruleSetCSS;
+    const length = this.getLength();
 
-      return css;
-    }, EMPTY_STRING);
+    if (length > 0) {
+      css = this.array.reduce((css, ruleSet) => {
+        const ruleSetCSS = ruleSet.asCSS(selectors);
+
+        css = (css === null) ?
+                ruleSetCSS :  ///
+                  `${css}
+
+${ruleSetCSS}`;
+
+        return css;
+      }, null);
+    }
 
     return css;
   }

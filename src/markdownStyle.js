@@ -5,29 +5,26 @@ import RuleSets from "./style/ruleSets";
 import Declarations from "./style/declarations";
 
 export default class MarkdownStyle {
-  constructor(ruleSets) {
-    this.ruleSets = ruleSets;
+  constructor(ruleSet) {
+    this.ruleSet = ruleSet;
   }
 
-  getRuleSets() {
-    return this.ruleSets;
+  getRuleSet() {
+    return this.ruleSet;
   }
 
-  asCSS(selectors) {
-    const ruleSetsCSS = this.ruleSets.asCSS(selectors),
+  asCSS() {
+    const ruleSetsCSS = this.ruleSet.asCSS(),
           css = ruleSetsCSS;  ///
 
     return css;
   }
 
-  static fromNodeAndTokens(node, tokens) {
+  static fromNodeTokensAndSelectors(node, tokens, selectors) {
     const declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          ruleSet = RuleSet.fromRuleSetsAndDeclarations(RuleSets, declarations);
-
-    ruleSets.unshiftRuleSet(ruleSet);
-
-    const style = new MarkdownStyle(ruleSets);
+          ruleSet = RuleSet.fromRuleSetsSelectorsAndDeclarations(ruleSets, selectors, declarations),
+          style = new MarkdownStyle(ruleSet);
 
     return style;
   }

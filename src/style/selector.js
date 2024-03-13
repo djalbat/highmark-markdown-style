@@ -11,6 +11,18 @@ export default class Selector {
     return this.content;
   }
 
+  combine(selector) {
+    const outerSelector = this, ///
+          innerSelector = selector, ///
+          outerSelectorContent = outerSelector.getContent(),
+          innerSelectorContent = innerSelector.getContent(),
+          content = `${outerSelectorContent} ${innerSelectorContent}`;
+
+    selector = Selector.fromContent(content);
+
+    return selector;
+  }
+
   asCSS() {
     const css = this.content; ///
 

@@ -33,9 +33,9 @@ export default class MarkdownStyleElement extends StyleElement {
           node = parser.parse(tokens);
 
     if (node !== null) {
-      const markdownStyle = MarkdownStyle.fromNodeAndTokens(node, tokens);
+      const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectors(node, tokens, this.selectors);
 
-      css = markdownStyle.asCSS(this.selectors);
+      css = markdownStyle.asCSS();
     }
 
     this.setCSS(css);

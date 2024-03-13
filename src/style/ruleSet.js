@@ -24,37 +24,19 @@ export default class RuleSet {
     return this.declarations;
   }
 
-  asCSS(selectors) {
-    let css = EMPTY_STRING;
+  asCSS(selectors = null) {
+    selectors = (selectors === null) ?
+                  this.selectors :
+                    selectors.combine(this.selectors);
 
-    const declarationsCSS = this.declarations.asCSS();
-
-    if (declarationsCSS !== EMPTY_STRING) {
-      selectors.forEachSelector((selector) => {
-        const outerSelector = selector, ///
-              outerSelectorCSS = outerSelector.asCSS();
-
-        this.selectors.forEachSelector((selector) => {
-          const innerSelector = selector, ///
-                innerSelectorCSS = innerSelector.asCSS();
-
-          css = `${outerSelectorCSS} ${innerSelectorCSS} {
-${declarationsCSS}}
-
-`;
-        });
-      });
-    }
+    const declarationsCSS = this.declarations.asCSS(selectors),
+          ruleSetsCSS = this.ruleSets.asCSS(selectors),
+          css = (declarationsCSS === EMPTY_STRING) ?
+                  ruleSetsCSS : ///
+                    `${declarationsCSS}
+${ruleSetsCSS}`;
 
     return css;
-  }
-
-  static fromRuleSetsAndDeclarations(RuleSets, declarations) {
-    const ruleSets = RuleSets.fromNothing(),
-          selectors = Selectors.fromNothing(),
-          ruleSet = new RuleSet(ruleSets, selectors, declarations);
-
-    return ruleSet;
   }
 
   static fromRuleSetsNodeAndTokens(RuleSets, node, tokens) {
@@ -62,6 +44,12 @@ ${declarationsCSS}}
           selectors = Selectors.fromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
           ruleSet = new RuleSet(ruleSets, selectors, declarations);
+
+    return ruleSet;
+  }
+
+  static fromRuleSetsSelectorsAndDeclarations(ruleSets, selectors, declarations) {
+    const ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
   }

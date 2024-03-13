@@ -12,15 +12,31 @@ export default class Declarations {
     this.array = array;
   }
 
-  asCSS() {
-    const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
-            const declarationCSS = declaration.asCSS();
+  getLength() { return this.array.length; }
 
-            declarationsCSS += declarationCSS;
+  asCSS(selectors) {
+    let css = EMPTY_STRING;
 
-            return declarationsCSS;
-          }, EMPTY_STRING),
-          css = declarationsCSS;  ///
+    const length = this.getLength();
+
+    if (length > 0) {
+      const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
+              const declarationCSS = declaration.asCSS();
+
+              declarationsCSS = (declarationsCSS === null) ?
+                                  declarationCSS : ///
+                                    `${declarationsCSS}
+${declarationCSS}`;
+
+              return declarationsCSS;
+            }, null),
+            selectorsCSS = selectors.asCSS();
+
+      css = `${selectorsCSS} {
+${declarationsCSS}
+}
+`;
+    }
 
     return css;
   }

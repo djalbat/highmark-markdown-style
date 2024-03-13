@@ -21,7 +21,7 @@ export default class Declaration {
   }
 
   asCSS() {
-    const css = `  ${this.name}: ${this.values};\n`;
+    const css = `  ${this.name}: ${this.values};`;
 
     return css;
   }
