@@ -2,18 +2,24 @@
 
 const bnf = `
 
-    document                ::=  ( declaration | ruleSet | error )+ ;
+    document                ::=  ( declaration | ruleSet | nonsense | error )+ ;
 
     
-    ruleSet                 ::=  selectors "{" ( declaration | ruleSet )+ "}" ;
+    declaration             ::=  [name] ":" values ";" ;
+
+    
+    ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense )+ "}" ;
+
+
+    nonsense                ::=  ( [escaped] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
+
+
+    error!                  ::=  . ;
 
 
     selectors               ::=  selector ( "," selector )* ;
 
 
-    declaration             ::=  [name] ":" values ";" ;
-
-    
     selector                ::=  [name] class* pseudoClass* 
     
                               |  class+ pseudoClass*
@@ -45,9 +51,6 @@ const bnf = `
                               |  [name] 
                               
                               ;
-
-
-    error!                  ::=  . ;
 
 `;
 
