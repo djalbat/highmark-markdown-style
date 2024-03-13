@@ -11,7 +11,7 @@ const entries = [
     "colour": "^#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})"
   },
   {
-    "unit": "^(?:em|%)"
+    "unit": "^(?:deg|em|%)"
   },
   {
     "name": "^[_a-zA-Z0-9-]+"

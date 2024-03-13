@@ -80,7 +80,7 @@ function noWhitespaceFromNode(node) {
 }
 
 function contentFromNodeAndTokens(node, tokens) {
-  let content = null;
+  let content = EMPTY_STRING;
 
   const nameTerminalNode = nameTerminalNodeQuery(node);
 
@@ -91,21 +91,23 @@ function contentFromNodeAndTokens(node, tokens) {
           ruleName = nameTerminalNodeContent, ///
           html = ruleNameToHTMLMap[ruleName] || null;
 
-    if (html !== null) {
-      const { tagName, className } = html;
+    if (html === null) {
+      content = null;
+    } else {
+      if (html !== null) {
+        const { tagName, className } = html;
 
-      content = EMPTY_STRING;
+        if (tagName !== null) {
+          content = `${content}${tagName}`;
+        }
 
-      if (tagName !== null) {
-        content = `${content}${tagName}`;
+        if (className !== null) {
+          content = `${content}.${className}`;
+        }
       }
 
-      if (className !== null) {
-        content = `${content}.${className}`;
-      }
+      offset = 1;
     }
-
-    offset = 1;
   }
 
   if (content !== null) {

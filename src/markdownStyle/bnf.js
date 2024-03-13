@@ -37,7 +37,9 @@ const bnf = `
     pseudoElement           ::=  <NO_WHITESPACE>"::"<NO_WHITESPACE>[name] ;
 
 
-    value                   ::=  [number]<NO_WHITESPACE>[unit]
+    value                   ::=  [name]<NO_WHITESPACE>"(" value ")"
+    
+                              |  [number]<NO_WHITESPACE>[unit]
     
                               |  [string-literal] 
                               

@@ -105,8 +105,8 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `paragraph {
-  margin: 0;
+  static initialMarkdownStyle = `:first-child {
+  transform: rotate(90deg);
 }
 `;
 
