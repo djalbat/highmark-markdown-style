@@ -26,7 +26,9 @@ export default class Selectors {
             innerSelectors.forEachSelector((innerSelector) => {
               const selector = outerSelector.combine(innerSelector);
 
-              array.push(selector);
+              if (selector !== null) {
+                array.push(selector);
+              }
             });
 
             return array;

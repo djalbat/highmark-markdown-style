@@ -25,14 +25,19 @@ export default class Selector {
   combine(selector) {
     const outerSelector = this, ///
           innerSelector = selector, ///
-          outerSelectorContent = outerSelector.getContent(),
-          innerSelectorContent = innerSelector.getContent(),
-          innerSelectorNoWhitespace = innerSelector.hasNoWhitespace(),
-          content = (innerSelectorNoWhitespace) ?
-                      `${outerSelectorContent}${innerSelectorContent}` :
-                        `${outerSelectorContent} ${innerSelectorContent}`;
+          innerSelectorContent = innerSelector.getContent();
 
-    selector = Selector.fromContent(content);
+    selector = null;
+
+    if (innerSelectorContent !== null) {
+      const outerSelectorContent = outerSelector.getContent(),
+            innerSelectorNoWhitespace = innerSelector.hasNoWhitespace(),
+            content = (innerSelectorNoWhitespace) ?
+                        `${outerSelectorContent}${innerSelectorContent}` :
+                          `${outerSelectorContent} ${innerSelectorContent}`;
+
+      selector = Selector.fromContent(content);
+    }
 
     return selector;
   }
@@ -73,8 +78,9 @@ function noWhitespaceFromNode(node) {
 
   return noWhitespace;
 }
+
 function contentFromNodeAndTokens(node, tokens) {
-  let content = EMPTY_STRING;
+  let content = null;
 
   const nameTerminalNode = nameTerminalNodeQuery(node);
 
@@ -88,6 +94,8 @@ function contentFromNodeAndTokens(node, tokens) {
     if (html !== null) {
       const { tagName, className } = html;
 
+      content = EMPTY_STRING;
+
       if (tagName !== null) {
         content = `${content}${tagName}`;
       }
@@ -100,9 +108,11 @@ function contentFromNodeAndTokens(node, tokens) {
     offset = 1;
   }
 
-  const remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
+  if (content !== null) {
+    const remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
 
-  content = `${content}${remainingContent}`;
+    content = `${content}${remainingContent}`;
+  }
 
   return content;
 }

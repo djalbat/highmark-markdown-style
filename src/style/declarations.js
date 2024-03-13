@@ -17,9 +17,10 @@ export default class Declarations {
   asCSS(selectors) {
     let css = EMPTY_STRING;
 
-    const length = this.getLength();
+    const length = this.getLength(),
+          selectorsLength = selectors.getLength();
 
-    if (length > 0) {
+    if ((length > 0) && (selectorsLength > 0)) {
       const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
               const declarationCSS = declaration.asCSS();
 
