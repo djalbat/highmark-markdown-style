@@ -3,11 +3,14 @@
 import Selectors from "../style/selectors";
 import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
+import MarkdownStyleLexer from "../markdownStyle/lexer";
+import MarkdownStyleParser from "../markdownStyle/parser";
 
 import { EMPTY_STRING } from "../constants";
 import { createDOMElement } from "../styleElement";
-import { markdownStyleLexer } from "../markdownStyle/lexer";
-import { markdownStyleParser } from "../markdownStyle/parser";
+
+const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
+      markdownStyleParser = MarkdownStyleParser.fromNothing();
 
 export default class MarkdownStyleElement extends StyleElement {
   constructor(domElement, selectors) {
@@ -23,8 +26,8 @@ export default class MarkdownStyleElement extends StyleElement {
   update(markdownStyle) {
     let css = EMPTY_STRING;
 
-    const lexer = markdownStyleLexer,
-          parser =  markdownStyleParser,
+    const lexer = markdownStyleLexer, ///
+          parser =  markdownStyleParser,  ///
           content = markdownStyle, ///
           tokens = lexer.tokenise(content),
           node = parser.parse(tokens);
@@ -40,8 +43,8 @@ export default class MarkdownStyleElement extends StyleElement {
     return css;
   }
 
-  static fromSelectorsString(selectorString) {
-    const selectors = Selectors.fromSelectorsString(selectorString),
+  static fromSelectorString(selectorString) {
+    const selectors = Selectors.fromSelectorString(selectorString),
           domElement = createDOMElement(),
           markdownStyleElement = new MarkdownStyleElement(domElement, selectors);
 

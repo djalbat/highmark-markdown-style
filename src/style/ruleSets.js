@@ -25,9 +25,7 @@ export default class RuleSets {
 
         css = (css === null) ?
                 ruleSetCSS :  ///
-                  `${css}
-
-${ruleSetCSS}`;
+                  `${css}${ruleSetCSS}`;
 
         return css;
       }, null);

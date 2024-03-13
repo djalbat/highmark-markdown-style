@@ -10,6 +10,7 @@
     "url": "https://github.com/djalbat/highmark-markdown-style"
   },
   "dependencies": {
+    "highmark-markdown": "^0.0.2",
     "occam-lexers": "^20.0.13",
     "occam-parsers": "^20.0.29",
     "occam-query": "^3.1.136"

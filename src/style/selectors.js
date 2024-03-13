@@ -3,17 +3,10 @@
 import Selector from "./selector";
 
 import { EMPTY_STRING } from "../constants";
-import { markdownStyleLexer } from "../markdownStyle/lexer";
-import { markdownStyleParser } from "../markdownStyle/parser";
-import { SELECTORS_RULE_NAME } from "../ruleNames";
 import { nodeQuery, nodesQuery } from "../utilities/query";
 
 const selectorsNonTerminalNodeQuery = nodeQuery("/ruleSet/selectors"),
       selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");
-
-const ruleMap = markdownStyleParser.getRuleMap(),
-      selectorsRule = ruleMap[SELECTORS_RULE_NAME],
-      startRule = selectorsRule;  ///
 
 export default class Selectors {
   constructor(array) {
@@ -88,26 +81,12 @@ ${selectorCSS}`;
     return selectors;
   }
 
-  static fromSelectorsString(selectorsString) {
-    let selectors = null;
-
-    const lexer = markdownStyleLexer,
-          parser =  markdownStyleParser,
-          content = selectorsString,  ///
-          tokens = lexer.tokenise(content),
-          node = parser.parse(tokens, startRule);
-
-    if (node !== null) {
-      const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
-            array = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
-              const node = selectorNonTerminalNode,  ///
-                    selector = Selector.fromNodeAndTokens(node, tokens);
-
-              return selector;
-            });
-
-      selectors = new Selectors(array);
-    }
+  static fromSelectorString(selectorString) {
+    const selector = Selector.fromSelectorString(selectorString),
+          array = [
+            selector
+          ],
+          selectors = new Selectors(array);
 
     return selectors;
   }
