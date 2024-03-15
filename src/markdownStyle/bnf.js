@@ -11,7 +11,7 @@ const bnf = `
     ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense )+ "}" ;
 
 
-    nonsense                ::=  ( [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
+    nonsense!               ::=  ( [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
 
 
     error!                  ::=  . ;
