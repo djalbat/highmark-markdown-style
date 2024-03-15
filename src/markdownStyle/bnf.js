@@ -11,7 +11,7 @@ const bnf = `
     ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense )+ "}" ;
 
 
-    nonsense                ::=  ( [escaped] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
+    nonsense                ::=  ( [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
 
 
     error!                  ::=  . ;
@@ -20,7 +20,7 @@ const bnf = `
     selectors               ::=  selector ( "," selector )* ;
 
 
-    selector                ::=  [name] class* pseudoClass* 
+    selector                ::=  [rule-name] class* pseudoClass* 
     
                               |  class+ pseudoClass*
 

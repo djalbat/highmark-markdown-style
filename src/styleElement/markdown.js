@@ -20,34 +20,46 @@ export default class MarkdownStyleElement extends StyleElement {
   }
 
   getSelectors() {
-    return selectors;
+    return this.selectors;
   }
 
   update(markdownStyle) {
-    let css = EMPTY_STRING;
-
-    const lexer = markdownStyleLexer, ///
-          parser =  markdownStyleParser,  ///
-          content = markdownStyle, ///
-          tokens = lexer.tokenise(content),
-          node = parser.parse(tokens);
-
-    if (node !== null) {
-      const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectors(node, tokens, this.selectors);
-
-      css = markdownStyle.asCSS();
-    }
+    const css = cssFromMarkdownStyleAndSelectors(markdownStyle, this.selectors);
 
     this.setCSS(css);
 
     return css;
   }
 
-  static fromSelectorString(selectorString) {
+  static fromSelectorString(Class, selectorString) {
+    if (selectorString === undefined) {
+      selectorString = Class; ///
+
+      Class = MarkdownStyleElement; ///
+    }
+
     const selectors = Selectors.fromSelectorString(selectorString),
           domElement = createDOMElement(),
-          markdownStyleElement = new MarkdownStyleElement(domElement, selectors);
+          markdownStyleElement = new Class(domElement, selectors);
 
     return markdownStyleElement;
   }
+}
+
+export function cssFromMarkdownStyleAndSelectors(markdownStyle, selectors) {
+  let css = EMPTY_STRING;
+
+  const lexer = markdownStyleLexer, ///
+        parser =  markdownStyleParser,  ///
+        content = markdownStyle, ///
+        tokens = lexer.tokenise(content),
+        node = parser.parse(tokens);
+
+  if (node !== null) {
+    const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectors(node, tokens, selectors);
+
+    css = markdownStyle.asCSS();
+  }
+
+  return css;
 }

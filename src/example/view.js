@@ -105,10 +105,9 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `:first-child {
-  transform: rotate(90deg);
-}
-`;
+  static initialMarkdownStyle = `error {
+  text-decoration: underline red;  
+}`;
 
   static tagName = "div";
 

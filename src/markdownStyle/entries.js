@@ -1,8 +1,13 @@
 "use strict";
 
+import ruleNamesExpression from "../ruleNamesExpression";
+
 const entries = [
   {
     "escaped": "^\\\\[^\\s]"
+  },
+  {
+    "rule-name": `^(?:${ruleNamesExpression})`
   },
   {
     "number": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?"

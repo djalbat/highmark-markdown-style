@@ -1,12 +1,25 @@
 "use strict";
 
-import { ruleNameToHTMLMap } from "highmark-markdown";
+import { ruleNames, ruleNameToHTMLMap } from "highmark-markdown";
 
 import { nodeQuery } from "../utilities/query";
 import { EMPTY_STRING } from "../constants";
 import { remainingContentFromNodeTokensAndOffset } from "../utilities/content";
 
-const nameTerminalNodeQuery = nodeQuery("/selector/@name");
+const { STRONG_TEXT_RULE_NAME,
+        ORDERED_LIST_RULE_NAME,
+        UNORDERED_LIST_RULE_NAME,
+        ORDERED_LIST_ITEM_RULE_NAME,
+        UNORDERED_LIST_ITEM_RULE_NAME,
+        STRONGLY_EMPHASISED_TEXT_RULE_NAME } = ruleNames,
+      strongTextHTML = ruleNameToHTMLMap[STRONG_TEXT_RULE_NAME],
+      orderedListHTML = ruleNameToHTMLMap[ORDERED_LIST_RULE_NAME],
+      unorderedListHTML = ruleNameToHTMLMap[UNORDERED_LIST_RULE_NAME],
+      { tagName: strongTextTagName } = strongTextHTML,
+      { tagName: orderedListTagName } = orderedListHTML,
+      { tagName: unorderedListTagName } = unorderedListHTML;
+
+const ruleNameTerminalNodeQuery = nodeQuery("/selector/@rule-name");
 
 export default class Selector {
   constructor(content, noWhitespace) {
@@ -73,8 +86,8 @@ export default class Selector {
 }
 
 function noWhitespaceFromNode(node) {
-  const nameTerminalNode = nameTerminalNodeQuery(node),
-        noWhitespace = (nameTerminalNode === null);
+  const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node),
+        noWhitespace = (ruleNameTerminalNode === null);
 
   return noWhitespace;
 }
@@ -82,13 +95,13 @@ function noWhitespaceFromNode(node) {
 function contentFromNodeAndTokens(node, tokens) {
   let content = EMPTY_STRING;
 
-  const nameTerminalNode = nameTerminalNodeQuery(node);
+  const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node);
 
   let offset = 0;
 
-  if (nameTerminalNode !== null) {
-    const nameTerminalNodeContent = nameTerminalNode.getContent(),
-          ruleName = nameTerminalNodeContent, ///
+  if (ruleNameTerminalNode !== null) {
+    const ruleNameTerminalNodeContent = ruleNameTerminalNode.getContent(),
+          ruleName = ruleNameTerminalNodeContent, ///
           html = ruleNameToHTMLMap[ruleName] || null;
 
     if (html === null) {
@@ -99,6 +112,26 @@ function contentFromNodeAndTokens(node, tokens) {
 
         if (tagName !== null) {
           content = `${content}${tagName}`;
+        }
+
+        switch (ruleName) {
+          case STRONGLY_EMPHASISED_TEXT_RULE_NAME: {
+            content = `${content} > ${strongTextTagName}`;
+
+            break;
+          }
+
+          case ORDERED_LIST_ITEM_RULE_NAME: {
+            content = `${orderedListTagName} > ${content}`;
+
+            break;
+          }
+
+          case UNORDERED_LIST_ITEM_RULE_NAME: {
+            content = `${unorderedListTagName} > ${content}`;
+
+            break;
+          }
         }
 
         if (className !== null) {
