@@ -5,14 +5,14 @@ import "juxtapose";
 import withStyle from "easy-with-style";  ///
 
 import { Body } from "easy";
-import { PREVIEW_PANE_DIV_SELECTOR } from "./example/constants";
+import { PREVIEW_PANE_SELECTOR_STRING } from "./example/constants";
 import { MarkdownStyleElement, DefaultMarkdownStyleElement } from "./index"; ///
 
 import View from "./example/view";
 
 const { renderStyles } = withStyle;
 
-const selectorString = PREVIEW_PANE_DIV_SELECTOR;
+const selectorString = PREVIEW_PANE_SELECTOR_STRING;
 
 renderStyles();
 
