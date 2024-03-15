@@ -2,7 +2,7 @@
 
 const bnf = `
 
-    document                ::=  ( declaration | ruleSet | nonsense | error )+ ;
+    document                ::=  ( declaration | ruleSet | error )+ ;
 
     
     declaration             ::=  [name] ":" values ";" ;
