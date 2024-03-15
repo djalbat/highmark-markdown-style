@@ -46,6 +46,13 @@ quaternaryHeading {
   margin: 1em 0 1em 0;
 }
 
+primaryHeading,
+secondaryHeading,
+tertiaryHeading,
+quaternaryHeading {
+  font-weight: bold;
+}
+
 orderedListItem,
 unorderedListItem {
   margin: 0.5em 0 0.5em 0;
