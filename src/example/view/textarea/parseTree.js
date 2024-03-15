@@ -37,9 +37,9 @@ class ParseTreeTextarea extends Textarea {
   }
 
   static defaultProperties = {
+    readOnly: true,
     className: "parse-tree",
-    spellCheck: "false",
-    readOnly: true
+    spellCheck: "false"
   };
 }
 

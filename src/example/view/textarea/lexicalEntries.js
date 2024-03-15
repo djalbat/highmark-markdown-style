@@ -23,6 +23,7 @@ class LexicalEntriesTextarea extends Textarea {
   }
 
   static defaultProperties = {
+    readOnly: true,
     className: "lexical-entries",
     spellCheck: "false"
   };

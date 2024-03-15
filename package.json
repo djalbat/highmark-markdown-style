@@ -1,7 +1,7 @@
 {
   "name": "highmark-markdown-style",
   "author": "James Smith",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/highmark-markdown-style",
   "description": "Highmark's Markdown style.",
@@ -10,7 +10,7 @@
     "url": "https://github.com/djalbat/highmark-markdown-style"
   },
   "dependencies": {
-    "highmark-markdown": "^0.0.2",
+    "highmark-markdown": "^0.0.4",
     "occam-lexers": "^20.0.13",
     "occam-parsers": "^20.0.29",
     "occam-query": "^3.1.136"

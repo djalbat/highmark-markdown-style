@@ -20,9 +20,9 @@ class CSSTreeTextarea extends Textarea {
   }
 
   static defaultProperties = {
+    readOnly: true,
     className: "css",
-    spellCheck: "false",
-    readOnly: true
+    spellCheck: "false"
   };
 }
 

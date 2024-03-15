@@ -20,6 +20,7 @@ class BNFTextarea extends Textarea {
   }
 
   static defaultProperties = {
+    readOnly: true,
     className: "bnf",
     spellCheck: "false"
   };
