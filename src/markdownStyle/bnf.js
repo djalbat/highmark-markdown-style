@@ -5,7 +5,7 @@ const bnf = `
     document                ::=  ( declaration | ruleSet | error )+ ;
 
     
-    ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense... )+ "}" ;
+    ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense... )* "}" ;
     
     
     declaration             ::=  [name] ":" values ";" ;
