@@ -105,9 +105,16 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `error {
-  text-decoration: underline red;  
-}`;
+  static initialMarkdownStyle = `tertiaryHeading {
+  top: 15em;
+  left: 21em;
+  width: 6em;
+  
+  table {
+    color: red;
+  }
+}
+`;
 
   static tagName = "div";
 
