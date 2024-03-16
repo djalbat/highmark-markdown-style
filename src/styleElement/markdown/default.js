@@ -9,8 +9,14 @@ export default class DefaultMarkdownStyleElement extends MarkdownStyleElement {
     this.update(markdownStyle)
   }
 
-  static fromSelectorString(selectorString) {
-    const defaultMarkdownStyleElement = MarkdownStyleElement.fromSelectorString(DefaultMarkdownStyleElement, selectorString);
+  static fromSelectorString(Class, selectorString) {
+    if (selectorString === undefined) {
+      selectorString = Class; ///
+
+      Class = DefaultMarkdownStyleElement;  ///
+    }
+
+    const defaultMarkdownStyleElement = Class.fromSelectorString(DefaultMarkdownStyleElement, selectorString);
 
     defaultMarkdownStyleElement.reset();
 
