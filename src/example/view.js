@@ -3,8 +3,8 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
+import { MarkdownStyleLexer, MarkdownStyleParser } from "../index";  ///
 import { RowsDiv, ColumnDiv, ColumnsDiv, VerticalSplitterDiv } from "easy-layout";
-import { MarkdownStyleLexer, MarkdownStyleParser, MarkdownStyleElement, DefaultMarkdownStyleElement } from "../index";  ///
 
 import SubHeading from "./view/subHeading";
 import BNFTextarea from "./view/textarea/bnf";
@@ -14,26 +14,26 @@ import ParseTreeTextarea from "./view/textarea/parseTree";
 import MarkdownStyleTextarea from "./view/textarea/markdownStyle";
 import LexicalEntriesTextarea from "./view/textarea/lexicalEntries";
 
-import { PREVIEW_PANE_SELECTOR_STRING } from "./constants";
-
 const { bnf } = MarkdownStyleParser,
       { entries } = MarkdownStyleLexer;
 
-const selectorString = PREVIEW_PANE_SELECTOR_STRING,
-      markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
+const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
       markdownStyleParser = MarkdownStyleParser.fromNothing();
-
-DefaultMarkdownStyleElement.fromSelectorString(selectorString);
-
-const markdownStyleElement = MarkdownStyleElement.fromSelectorString(selectorString);
 
 class View extends Element {
   keyUpHandler = (event, element) => {
     this.update();
   }
 
+  getMarkdownStyleElement() {
+    const { markdownStyleElement } = this.properties;
+
+    return markdownStyleElement;
+  }
+
   update() {
-    const markdownStyle = this.getMarkdownStyle(),
+    const markdownStyleElement = this.getMarkdownStyleElement(),
+          markdownStyle = this.getMarkdownStyle(),
           css = markdownStyleElement.update(markdownStyle);
 
     this.setCSS(css);
@@ -110,6 +110,10 @@ class View extends Element {
 }`;
 
   static tagName = "div";
+
+  static ignoredProperties = [
+    "markdownStyleElement"
+  ];
 
   static defaultProperties = {
     className: "view"
