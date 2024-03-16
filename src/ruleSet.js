@@ -3,7 +3,7 @@
 import Selectors from "./selectors";
 import Declarations from "./declarations";
 
-import { EMPTY_STRING } from "../constants";
+import { EMPTY_STRING } from "./constants";
 
 export default class RuleSet {
   constructor(ruleSets, selectors, declarations) {

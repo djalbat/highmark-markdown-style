@@ -2,8 +2,8 @@
 
 import RuleSet from "./ruleSet";
 
-import { nodesQuery } from "../utilities/query";
-import { EMPTY_STRING } from "../constants";
+import { nodesQuery } from "./utilities/query";
+import { EMPTY_STRING } from "./constants";
 
 const ruleSetNonTerminalNodesQuery = nodesQuery("/*/ruleSet");
 

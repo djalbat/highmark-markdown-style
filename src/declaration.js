@@ -1,7 +1,7 @@
 "use strict";
 
-import { nodeQuery } from "../utilities/query";
-import { contentFromNodeAndTokens } from "../utilities/content";
+import { nodeQuery } from "./utilities/query";
+import { contentFromNodeAndTokens } from "./utilities/content";
 
 const nameTerminalNodeQuery = nodeQuery("/*/@name"),
       valuesNonTerminalNodeQuery = nodeQuery("/*/values");

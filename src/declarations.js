@@ -2,8 +2,8 @@
 
 import Declaration from "./declaration";
 
-import { nodesQuery } from "../utilities/query";
-import { EMPTY_STRING } from "../constants";
+import { nodesQuery } from "./utilities/query";
+import { EMPTY_STRING } from "./constants";
 
 const declarationNonTerminalNodesQuery = nodesQuery("/*/declaration");
 

@@ -2,20 +2,19 @@
 
 import MarkdownStyleElement from "../../styleElement/markdown";
 
-import { cssFromMarkdownStyleAndSelectors } from "../../styleElement/markdown";
-
 export default class DefaultMarkdownStyleElement extends MarkdownStyleElement {
-  update(markdownStyle) {
-    ///
+  reset() {
+    const markdownStyle = defaultMarkdownStyle; ///
+
+    this.update(markdownStyle)
   }
 
   static fromSelectorString(selectorString) {
-    const defaultMarkdownStyleElement = MarkdownStyleElement.fromSelectorString(DefaultMarkdownStyleElement, selectorString),
-          markdownStyle = defaultMarkdownStyle, ///
-          selectors = defaultMarkdownStyleElement.getSelectors(),
-          css = cssFromMarkdownStyleAndSelectors(markdownStyle, selectors);
+    const defaultMarkdownStyleElement = MarkdownStyleElement.fromSelectorString(DefaultMarkdownStyleElement, selectorString);
 
-    defaultMarkdownStyleElement.setCSS(css);
+    defaultMarkdownStyleElement.reset();
+
+    return defaultMarkdownStyleElement;
   }
 }
 
@@ -78,9 +77,19 @@ quaternaryHeading {
   }
 }
 
+
 blockListing,
 inlineListing {
   font-family: "Computer Modern Typewriter";
+}
+
+tableHead {
+  border: 1px solid blackl;
+}
+
+tableBodyCell,
+tableHeadCell {
+  padding: 1em;
 }
 
 strongText {

@@ -1,6 +1,6 @@
 "use strict";
 
-import Selectors from "../style/selectors";
+import Selectors from "../selectors";
 import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
 import MarkdownStyleLexer from "../markdownStyle/lexer";
@@ -46,7 +46,7 @@ export default class MarkdownStyleElement extends StyleElement {
   }
 }
 
-export function cssFromMarkdownStyleAndSelectors(markdownStyle, selectors) {
+function cssFromMarkdownStyleAndSelectors(markdownStyle, selectors) {
   let css = EMPTY_STRING;
 
   const lexer = markdownStyleLexer, ///

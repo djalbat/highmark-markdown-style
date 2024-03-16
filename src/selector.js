@@ -2,9 +2,9 @@
 
 import { ruleNames, ruleNameToHTMLMap } from "highmark-markdown";
 
-import { nodeQuery } from "../utilities/query";
-import { EMPTY_STRING } from "../constants";
-import { remainingContentFromNodeTokensAndOffset } from "../utilities/content";
+import { nodeQuery } from "./utilities/query";
+import { EMPTY_STRING } from "./constants";
+import { remainingContentFromNodeTokensAndOffset } from "./utilities/content";
 
 const { STRONG_TEXT_RULE_NAME,
         ORDERED_LIST_RULE_NAME,

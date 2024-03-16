@@ -1,6 +1,10 @@
 "use strict";
 
-import ruleNamesExpression from "../ruleNamesExpression";
+import { ruleNameToHTMLMap } from "highmark-markdown";
+
+import { ruleNamesExpressionFromRuleNameToHTMLMap } from "../utilities/entries"; ///
+
+const ruleNamesExpression = ruleNamesExpressionFromRuleNameToHTMLMap(ruleNameToHTMLMap);
 
 const entries = [
   {

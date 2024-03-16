@@ -2,8 +2,8 @@
 
 import Selector from "./selector";
 
-import { EMPTY_STRING } from "../constants";
-import { nodeQuery, nodesQuery } from "../utilities/query";
+import { EMPTY_STRING } from "./constants";
+import { nodeQuery, nodesQuery } from "./utilities/query";
 
 const selectorsNonTerminalNodeQuery = nodeQuery("/ruleSet/selectors"),
       selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");

@@ -1,8 +1,8 @@
 "use strict";
 
-import RuleSet from "./style/ruleSet";
-import RuleSets from "./style/ruleSets";
-import Declarations from "./style/declarations";
+import RuleSet from "./ruleSet";
+import RuleSets from "./ruleSets";
+import Declarations from "./declarations";
 
 export default class MarkdownStyle {
   constructor(ruleSet) {
