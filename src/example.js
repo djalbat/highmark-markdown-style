@@ -12,6 +12,7 @@ import View from "./example/view";
 import { PREVIEW_PANE_SELECTOR_STRING } from "./example/constants";
 
 const { renderStyles } = withStyle;
+
 const selectorString = PREVIEW_PANE_SELECTOR_STRING;
 
 DefaultMarkdownStyleElement.fromSelectorString(selectorString);
