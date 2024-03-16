@@ -16,7 +16,7 @@ export default class DefaultMarkdownStyleElement extends MarkdownStyleElement {
       Class = DefaultMarkdownStyleElement;  ///
     }
 
-    const defaultMarkdownStyleElement = Class.fromSelectorString(DefaultMarkdownStyleElement, selectorString);
+    const defaultMarkdownStyleElement = MarkdownStyleElement.fromSelectorString(Class, selectorString);
 
     defaultMarkdownStyleElement.reset();
 
