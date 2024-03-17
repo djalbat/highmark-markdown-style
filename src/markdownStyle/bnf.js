@@ -5,7 +5,7 @@ const bnf = `
     document                ::=  ( ruleSet | declaration | error )+ ;
 
     
-    ruleSet!                ::=  selectors "{" ( ruleSet | declaration | nonsense )* "}" ;
+    ruleSet..               ::=  selectors "{" ( ruleSet | declaration | nonsense )* "}" ;
     
     
     declaration             ::=  [name] ":" values ";" ;
@@ -14,7 +14,7 @@ const bnf = `
     nonsense                ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
 
 
-    error!                  ::=  . ;
+    error.                  ::=  . ;
 
 
     selectors               ::=  selector ( "," selector )* ;
