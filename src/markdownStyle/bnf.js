@@ -2,19 +2,19 @@
 
 const bnf = `
 
-    document                ::=  ( declaration | ruleSet | error )+ ;
+    document                ::=  ( ruleSet | declaration | error )+ ;
 
     
-    ruleSet                 ::=  selectors "{" ( declaration | ruleSet | nonsense... )* "}" ;
+    ruleSet!                ::=  selectors "{" ( ruleSet | declaration | nonsense )* "}" ;
     
     
     declaration             ::=  [name] ":" values ";" ;
 
     
+    nonsense                ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
+
+
     error!                  ::=  . ;
-
-
-    nonsense!               ::=  ( [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] )+ ;
 
 
     selectors               ::=  selector ( "," selector )* ;

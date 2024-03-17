@@ -105,14 +105,8 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `tertiaryHeading {
-  top: 15em;
-  left: 21em;
-  width: 6em;
-  
-  table {
-    color: red;
-  }
+  static initialMarkdownStyle = `table {
+  color: red;
 }
 `;
 
