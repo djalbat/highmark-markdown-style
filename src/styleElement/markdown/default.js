@@ -3,10 +3,14 @@
 import MarkdownStyleElement from "../../styleElement/markdown";
 
 export default class DefaultMarkdownStyleElement extends MarkdownStyleElement {
-  reset() {
+  update(defaultMarkdownStyle) {
     const markdownStyle = defaultMarkdownStyle; ///
 
-    this.update(markdownStyle)
+    super.update(markdownStyle)
+  }
+
+  reset() {
+    this.update(defaultMarkdownStyle)
   }
 
   static fromSelectorString(Class, selectorString) {
