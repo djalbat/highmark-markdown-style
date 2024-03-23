@@ -11,7 +11,7 @@ const bnf = `
     declaration             ::=  [name] ":" values ";" ;
 
     
-    nonsense                ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
+    nonsense.               ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
 
 
     error.                  ::=  . ;
