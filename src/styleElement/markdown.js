@@ -31,6 +31,12 @@ export default class MarkdownStyleElement extends StyleElement {
     return css;
   }
 
+  reset() {
+    const markdownStyle = EMPTY_STRING;
+
+    this.update(markdownStyle)
+  }
+
   static fromSelectorString(Class, selectorString) {
     if (selectorString === undefined) {
       selectorString = Class; ///
