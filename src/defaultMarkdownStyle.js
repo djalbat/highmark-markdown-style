@@ -2,7 +2,7 @@
 
 import { colours } from "occam-styles";
 
-const { woodsmoke, springWood, pomegranate } = colours;
+const { woodsmoke, springWood, stormDust, pomegranate } = colours;
 
 const defaultMarkdownStyle = `
 document {
@@ -106,7 +106,14 @@ stronglyEmphasisedText {
 }
 
 footnotesList {
-  font-size: 0.75em;
+  border-top: 1px solid ${stormDust};
+  padding-top: 1em;
+  list-style-type: none;
+}
+
+link {
+  font-size: 0.8em;
+  vertical-align: super;
 }
 
 error {
