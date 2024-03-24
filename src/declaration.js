@@ -1,5 +1,6 @@
 "use strict";
 
+import { COLOUR } from "./constants";
 import { nodeQuery } from "./utilities/query";
 import { contentFromNodeAndTokens } from "./utilities/content";
 
@@ -21,7 +22,8 @@ export default class Declaration {
   }
 
   asCSS() {
-    const css = `  ${this.name}: ${this.values};`;
+    const name = this.name.replace(/colour/g, COLOUR),
+          css = `  ${name}: ${this.values};`;
 
     return css;
   }

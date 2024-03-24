@@ -6,11 +6,11 @@ const { woodsmoke, springWood, stormDust, pomegranate } = colours;
 
 const defaultMarkdownStyle = `
 document {
-  color: ${woodsmoke};
+  colour: ${woodsmoke};
   padding: 1em;
   min-height: 100%;
   font-family: "Computer Modern Serif";
-  background-color: ${springWood};
+  background-colour: ${springWood};
 }
   
 primaryHeading {
@@ -76,8 +76,8 @@ inlineListing {
 
 blockListing,
 inlineListing {
-  color: ${springWood};
-  background-color: ${woodsmoke};
+  colour: ${springWood};
+  background-colour: ${woodsmoke};
   font-family: "Computer Modern Typewriter";
 }
 

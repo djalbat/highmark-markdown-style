@@ -107,7 +107,7 @@ class View extends Element {
 
   static initialMarkdownStyle = `paragraph {
   :first-child {
-    color: red;
+    colour: red;
   }
 }
 `;
