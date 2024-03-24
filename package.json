@@ -13,7 +13,8 @@
     "highmark-markdown": "^0.0.28",
     "occam-lexers": "^21.0.6",
     "occam-parsers": "^21.0.7",
-    "occam-query": "^3.1.136"
+    "occam-query": "^3.1.136",
+    "occam-styles": "^5.0.20"
   },
   "devDependencies": {
     "@swc/core": "^1.2.50",
