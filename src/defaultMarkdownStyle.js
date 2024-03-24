@@ -7,7 +7,7 @@ const { woodsmoke, springWood, pomegranate } = colours;
 const defaultMarkdownStyle = `
 document {
   color: ${woodsmoke};
-  margin: 1em;
+  padding: 1em;
   font-family: "Computer Modern Serif";
   background-color: ${springWood};
 }
