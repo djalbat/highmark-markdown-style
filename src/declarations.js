@@ -12,10 +12,6 @@ export default class Declarations {
     this.array = array;
   }
 
-  getArray() {
-    return this.array;
-  }
-
   getLength() { return this.array.length; }
 
   asCSS(selectorsList) {

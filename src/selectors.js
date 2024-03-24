@@ -12,20 +12,28 @@ export default class Selectors {
     this.array = array;
   }
 
-  getArray() {
-    return this.array;
-  }
-
   getLength() { return this.array.length; }
 
-  combine(selectors) {
-    const selectorsArray = selectors.getArray(),
-          array = [
-            ...this.array,
-            ...selectorsArray
-          ];
+  reduceSelector(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
-    selectors = Selectors.fromArray(array); ///
+  forEachSelector(callback) { this.array.forEach(callback); }
+
+  combine(selectors) {
+    const outerSelectors = Selectors.fromArray(this.array), ///
+          innerSelectors = selectors, ///
+          array = outerSelectors.reduceSelector((array, outerSelector) => {
+                  innerSelectors.forEachSelector((innerSelector) => {
+                    const selector = outerSelector.combine(innerSelector);
+
+                    if (selector !== null) {
+                      array.push(selector);
+                    }
+                  });
+
+            return array;
+          }, []);
+
+    selectors = Selectors.fromArray(array);
 
     return selectors;
   }

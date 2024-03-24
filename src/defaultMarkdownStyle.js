@@ -33,7 +33,6 @@ paragraph,
 orderedList,
 unorderedList,
 blockListing,
-inlineListing,
 quaternaryHeading {
   font-size: 1em;
   margin: 1em 0 1em 0;
@@ -51,7 +50,6 @@ unorderedList,
 orderedListItem,
 unorderedListItem,
 blockListing,
-inlineListing,
 primaryHeading,
 secondaryHeading,
 tertiaryHeading,
@@ -70,6 +68,10 @@ secondaryHeading,
 tertiaryHeading,
 quaternaryHeading {
   font-weight: bold;
+}
+
+inlineListing {
+  font-size: 1em;
 }
 
 blockListing,

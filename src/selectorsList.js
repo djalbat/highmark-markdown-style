@@ -13,10 +13,6 @@ export default class SelectorsList {
     this.array = array;
   }
 
-  getArray() {
-    return this.array;
-  }
-
   getLength() { return this.array.length; }
 
   reduceSelectors(callback, initialValue) { return this.array.reduce(callback, initialValue); }
@@ -27,13 +23,13 @@ export default class SelectorsList {
     const outerSelectorsList = SelectorsList.fromArray(this.array), ///
           innerSelectorsList = selectorsList, ///
           array = outerSelectorsList.reduceSelectors((array, outerSelectors) => {
-            innerSelectorsList.forEachSelectors((innerSelectors) => {
-              const selectors = outerSelectors.combine(innerSelectors);
+                  innerSelectorsList.forEachSelectors((innerSelectors) => {
+                    const selectors = outerSelectors.combine(innerSelectors);
 
-              if (selectors !== null) {
-                array.push(selectors);
-              }
-            });
+                    if (selectors !== null) {
+                      array.push(selectors);
+                    }
+                  });
 
             return array;
           }, []);
