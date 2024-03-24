@@ -111,6 +111,10 @@ footnotesList {
   list-style-type: none;
 }
 
+footnoteItem paragraph {
+  margin: 0;
+}
+
 link {
   font-size: 0.8em;
   vertical-align: super;

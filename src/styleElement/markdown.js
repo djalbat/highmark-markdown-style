@@ -1,8 +1,8 @@
 "use strict";
 
-import Selectors from "../selectors";
 import StyleElement from "../styleElement";
 import MarkdownStyle from "../markdownStyle";
+import SelectorsList from "../selectorsList";
 import MarkdownStyleLexer from "../markdownStyle/lexer";
 import MarkdownStyleParser from "../markdownStyle/parser";
 
@@ -13,18 +13,18 @@ const markdownStyleLexer = MarkdownStyleLexer.fromNothing(),
       markdownStyleParser = MarkdownStyleParser.fromNothing();
 
 export default class MarkdownStyleElement extends StyleElement {
-  constructor(domElement, selectors) {
+  constructor(domElement, selectorsList) {
     super(domElement);
 
-    this.selectors = selectors;
+    this.selectorsList = selectorsList;
   }
 
-  getSelectors() {
-    return this.selectors;
+  getSelectorsList() {
+    return this.selectorsList;
   }
 
   update(markdownStyle) {
-    const css = cssFromMarkdownStyleAndSelectors(markdownStyle, this.selectors);
+    const css = cssFromMarkdownStyleAndSelectorsList(markdownStyle, this.selectorsList);
 
     this.setCSS(css);
 
@@ -44,15 +44,15 @@ export default class MarkdownStyleElement extends StyleElement {
       Class = MarkdownStyleElement; ///
     }
 
-    const selectors = Selectors.fromSelectorString(selectorString),
-          domElement = createDOMElement(),
-          markdownStyleElement = new Class(domElement, selectors);
+    const domElement = createDOMElement(),
+          selectorsList = SelectorsList.fromSelectorString(selectorString),
+          markdownStyleElement = new Class(domElement, selectorsList);
 
     return markdownStyleElement;
   }
 }
 
-function cssFromMarkdownStyleAndSelectors(markdownStyle, selectors) {
+function cssFromMarkdownStyleAndSelectorsList(markdownStyle, selectorsList) {
   let css = EMPTY_STRING;
 
   const lexer = markdownStyleLexer, ///
@@ -62,7 +62,7 @@ function cssFromMarkdownStyleAndSelectors(markdownStyle, selectors) {
         node = parser.parse(tokens);
 
   if (node !== null) {
-    const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectors(node, tokens, selectors);
+    const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectorsList(node, tokens, selectorsList);
 
     css = markdownStyle.asCSS();
   }

@@ -19,9 +19,9 @@ export default class MarkdownStyle {
     return css;
   }
 
-  static fromNodeTokensAndSelectors(node, tokens, selectors) {
+  static fromNodeTokensAndSelectorsList(node, tokens, selectorsList) {
     const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          ruleSet = RuleSet.fromRuleSetsAndSelectors(ruleSets, selectors),
+          ruleSet = RuleSet.fromRuleSetsAndSelectorsList(ruleSets, selectorsList),
           style = new MarkdownStyle(ruleSet);
 
     return style;

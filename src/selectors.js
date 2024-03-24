@@ -2,39 +2,30 @@
 
 import Selector from "./selector";
 
+import { nodesQuery } from "./utilities/query";
 import { EMPTY_STRING } from "./constants";
-import { nodeQuery, nodesQuery } from "./utilities/query";
 
-const selectorsNonTerminalNodeQuery = nodeQuery("/ruleSet/selectors"),
-      selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");
+const selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");
 
 export default class Selectors {
   constructor(array) {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getLength() { return this.array.length; }
 
-  reduceSelector(callback, initialValue) { return this.array.reduce(callback, initialValue); }
-
-  forEachSelector(callback) { this.array.forEach(callback); }
-
   combine(selectors) {
-    const outerSelectors = Selectors.fromArray(this.array), ///
-          innerSelectors = selectors, ///
-          array = outerSelectors.reduceSelector((array, outerSelector) => {
-            innerSelectors.forEachSelector((innerSelector) => {
-              const selector = outerSelector.combine(innerSelector);
+    const selectorsArray = selectors.getArray(),
+          array = [
+            ...this.array,
+            ...selectorsArray
+          ];
 
-              if (selector !== null) {
-                array.push(selector);
-              }
-            });
-
-            return array;
-          }, []);
-
-    selectors = Selectors.fromArray(array);
+    selectors = Selectors.fromArray(array); ///
 
     return selectors;
   }
@@ -50,8 +41,7 @@ export default class Selectors {
 
         css = (css === null) ?
                 selectorCSS : ///
-                  `${css},
-${selectorCSS}`;
+                  `${css} ${selectorCSS}`;
 
         return css;
       }, null);
@@ -67,10 +57,6 @@ ${selectorCSS}`;
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const selectorsNonTerminalNode = selectorsNonTerminalNodeQuery(node);
-
-    node = selectorsNonTerminalNode;  ///
-
     const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
           array = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
             const node = selectorNonTerminalNode,  ///

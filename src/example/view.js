@@ -105,7 +105,7 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `table {
+  static initialMarkdownStyle = `footnoteItem paragraph {
   color: red;
 }
 `;

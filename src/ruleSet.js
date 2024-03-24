@@ -1,36 +1,36 @@
 "use strict";
 
-import Selectors from "./selectors";
 import Declarations from "./declarations";
+import SelectorsList from "./selectorsList";
 
 import { EMPTY_STRING } from "./constants";
 
 export default class RuleSet {
-  constructor(ruleSets, selectors, declarations) {
+  constructor(ruleSets, declarations, selectorsList) {
     this.ruleSets = ruleSets;
-    this.selectors = selectors;
     this.declarations = declarations;
+    this.selectorsList = selectorsList;
   }
 
   getRuleSets() {
     return this.ruleSets;
   }
 
-  getSelectors() {
-    return this.selectors;
-  }
-
   getDeclarations() {
     return this.declarations;
   }
 
-  asCSS(selectors = null) {
-    selectors = (selectors === null) ?
-                  this.selectors :
-                    selectors.combine(this.selectors);
+  getSelectorsList() {
+    return this.selectorsList;
+  }
 
-    const declarationsCSS = this.declarations.asCSS(selectors),
-          ruleSetsCSS = this.ruleSets.asCSS(selectors),
+  asCSS(selectorsList = null) {
+    selectorsList = (selectorsList === null) ?
+                      this.selectorsList :
+                        selectorsList.combine(this.selectorsList);
+
+    const declarationsCSS = this.declarations.asCSS(selectorsList),
+          ruleSetsCSS = this.ruleSets.asCSS(selectorsList),
           css = (declarationsCSS === EMPTY_STRING) ?
                   ruleSetsCSS : ///
                     `${declarationsCSS}
@@ -41,16 +41,16 @@ ${ruleSetsCSS}`;
 
   static fromRuleSetsNodeAndTokens(RuleSets, node, tokens) {
     const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          selectors = Selectors.fromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
-          ruleSet = new RuleSet(ruleSets, selectors, declarations);
+          selectorsList = SelectorsList.fromNodeAndTokens(node, tokens),
+          ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
 
     return ruleSet;
   }
 
-  static fromRuleSetsAndSelectors(ruleSets, selectors) {
+  static fromRuleSetsAndSelectorsList(ruleSets, selectorsList) {
     const declarations = Declarations.fromNothing(),
-          ruleSet = new RuleSet(ruleSets, selectors, declarations);
+          ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
 
     return ruleSet;
   }

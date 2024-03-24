@@ -12,15 +12,19 @@ export default class Declarations {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getLength() { return this.array.length; }
 
-  asCSS(selectors) {
+  asCSS(selectorsList) {
     let css = EMPTY_STRING;
 
     const length = this.getLength(),
-          selectorsLength = selectors.getLength();
+          selectorsListLength = selectorsList.getLength();
 
-    if ((length > 0) && (selectorsLength > 0)) {
+    if ((length > 0) && (selectorsListLength > 0)) {
       const declarationsCSS = this.array.reduce((declarationsCSS, declaration) => {
               const declarationCSS = declaration.asCSS();
 
@@ -31,9 +35,9 @@ ${declarationCSS}`;
 
               return declarationsCSS;
             }, null),
-            selectorsCSS = selectors.asCSS();
+            selectorsListCSS = selectorsList.asCSS();
 
-      css = `${selectorsCSS} {
+      css = `${selectorsListCSS} {
 ${declarationsCSS}
 }
 `;
