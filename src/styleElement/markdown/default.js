@@ -46,6 +46,7 @@ tertiaryHeading {
 }
 
 table,
+paragraph,
 orderedList,
 unorderedList,
 blockListing,
@@ -68,6 +69,7 @@ unorderedListItem {
 }
 
 table,
+paragraph,
 orderedList,
 unorderedList,
 orderedListItem,
@@ -86,7 +88,6 @@ quaternaryHeading {
     margin-top: 0;
   }
 }
-
 
 blockListing,
 inlineListing {
