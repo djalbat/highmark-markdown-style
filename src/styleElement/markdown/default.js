@@ -28,7 +28,10 @@ export default class DefaultMarkdownStyleElement extends MarkdownStyleElement {
   }
 }
 
-const defaultMarkdownStyle = `font-family: "Computer Modern Serif";
+const defaultMarkdownStyle = `color: #0c0d0f;
+margin: 1em;
+font-family: "Computer Modern Serif";
+background-color: #f8f6f1;
   
 primaryHeading {
   font-size: 3em;
@@ -54,13 +57,6 @@ inlineListing,
 quaternaryHeading {
   font-size: 1em;
   margin: 1em 0 1em 0;
-}
-
-primaryHeading,
-secondaryHeading,
-tertiaryHeading,
-quaternaryHeading {
-  font-weight: bold;
 }
 
 orderedListItem,
@@ -89,13 +85,26 @@ quaternaryHeading {
   }
 }
 
+primaryHeading,
+secondaryHeading,
+tertiaryHeading,
+quaternaryHeading {
+  font-weight: bold;
+}
+
 blockListing,
 inlineListing {
+  color: #f8f6f1;
+  background-color: #0c0d0f;
   font-family: "Computer Modern Typewriter";
 }
 
+table {
+  border-collapsed: collapse;
+}
+
 tableHead {
-  border: 1px solid blackl;
+  border: 1px solid #0c0d0f;
 }
 
 tableBodyCell,
