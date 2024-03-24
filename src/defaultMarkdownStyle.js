@@ -8,6 +8,7 @@ const defaultMarkdownStyle = `
 document {
   color: ${woodsmoke};
   padding: 1em;
+  min-height: 100%;
   font-family: "Computer Modern Serif";
   background-color: ${springWood};
 }
