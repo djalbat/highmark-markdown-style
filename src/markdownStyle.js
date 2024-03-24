@@ -2,7 +2,6 @@
 
 import RuleSet from "./ruleSet";
 import RuleSets from "./ruleSets";
-import Declarations from "./declarations";
 
 export default class MarkdownStyle {
   constructor(ruleSet) {
@@ -21,9 +20,8 @@ export default class MarkdownStyle {
   }
 
   static fromNodeTokensAndSelectors(node, tokens, selectors) {
-    const declarations = Declarations.fromNodeAndTokens(node, tokens),
-          ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          ruleSet = RuleSet.fromRuleSetsSelectorsAndDeclarations(ruleSets, selectors, declarations),
+    const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
+          ruleSet = RuleSet.fromRuleSetsAndSelectors(ruleSets, selectors),
           style = new MarkdownStyle(ruleSet);
 
     return style;

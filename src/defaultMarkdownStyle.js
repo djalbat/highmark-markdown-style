@@ -5,10 +5,12 @@ import { colours } from "occam-styles";
 const { woodsmoke, springWood, pomegranate } = colours;
 
 const defaultMarkdownStyle = `
-color: ${woodsmoke};
-margin: 1em;
-font-family: "Computer Modern Serif";
-background-color: ${springWood};
+document {
+  color: ${woodsmoke};
+  margin: 1em;
+  font-family: "Computer Modern Serif";
+  background-color: ${springWood};
+}
   
 primaryHeading {
   font-size: 3em;

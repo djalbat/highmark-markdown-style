@@ -48,8 +48,9 @@ ${ruleSetsCSS}`;
     return ruleSet;
   }
 
-  static fromRuleSetsSelectorsAndDeclarations(ruleSets, selectors, declarations) {
-    const ruleSet = new RuleSet(ruleSets, selectors, declarations);
+  static fromRuleSetsAndSelectors(ruleSets, selectors) {
+    const declarations = Declarations.fromNothing(),
+          ruleSet = new RuleSet(ruleSets, selectors, declarations);
 
     return ruleSet;
   }
