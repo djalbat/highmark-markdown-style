@@ -24,10 +24,8 @@ export default class RuleSet {
     return this.selectorsList;
   }
 
-  asCSS(selectorsList = null) {
-    selectorsList = (selectorsList === null) ?
-                      this.selectorsList :
-                        selectorsList.combine(this.selectorsList);
+  asCSS(selectorsList, outermost = false) {
+    selectorsList = selectorsList.combine(this.selectorsList, outermost);  ///
 
     const declarationsCSS = this.declarations.asCSS(selectorsList),
           ruleSetsCSS = this.ruleSets.asCSS(selectorsList),
@@ -43,13 +41,6 @@ ${ruleSetsCSS}`;
     const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
           selectorsList = SelectorsList.fromNodeAndTokens(node, tokens),
-          ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
-
-    return ruleSet;
-  }
-
-  static fromRuleSetsAndSelectorsList(ruleSets, selectorsList) {
-    const declarations = Declarations.fromNothing(),
           ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
 
     return ruleSet;

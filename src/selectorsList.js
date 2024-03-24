@@ -19,12 +19,12 @@ export default class SelectorsList {
 
   forEachSelectors(callback) { this.array.forEach(callback); }
 
-  combine(selectorsList) {
+  combine(selectorsList, outermost = false) {
     const outerSelectorsList = SelectorsList.fromArray(this.array), ///
           innerSelectorsList = selectorsList, ///
           array = outerSelectorsList.reduceSelectors((array, outerSelectors) => {
                   innerSelectorsList.forEachSelectors((innerSelectors) => {
-                    const selectors = outerSelectors.combine(innerSelectors);
+                    const selectors = outerSelectors.combine(innerSelectors, outermost);
 
                     if (selectors !== null) {
                       array.push(selectors);

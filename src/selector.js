@@ -22,35 +22,42 @@ const { STRONG_TEXT_RULE_NAME,
 const ruleNameTerminalNodeQuery = nodeQuery("/selector/@rule-name");
 
 export default class Selector {
-  constructor(content, noWhitespace) {
+  constructor(content, whitespace) {
     this.content = content;
-    this.noWhitespace = noWhitespace;
+    this.whitespace = whitespace;
   }
 
   getContent() {
     return this.content;
   }
 
-  hasNoWhitespace() {
-    return this.noWhitespace;
+  hasWhitespace() {
+    return this.whitespace;
   }
 
-  combine(selector) {
+  combine(selector, outermost = true) {
     const outerSelector = this, ///
           innerSelector = selector, ///
           innerSelectorContent = innerSelector.getContent();
 
-    selector = null;
+    let content = null;
 
     if (innerSelectorContent !== null) {
       const outerSelectorContent = outerSelector.getContent(),
-            innerSelectorNoWhitespace = innerSelector.hasNoWhitespace(),
-            content = (innerSelectorNoWhitespace) ?
-                        `${outerSelectorContent}${innerSelectorContent}` :
-                          `${outerSelectorContent} ${innerSelectorContent}`;
+            innerSelectorWhitespace = innerSelector.hasWhitespace();
 
-      selector = Selector.fromContent(content);
+      if (innerSelectorWhitespace) {
+        content = `${outerSelectorContent} ${innerSelectorContent}`;
+      } else {
+        if (!outermost) {
+          content = `${outerSelectorContent}${innerSelectorContent}`;
+        }
+      }
     }
+
+    selector = (content === null) ?
+                  null :
+                    Selector.fromContent(content);
 
     return selector;
   }
@@ -62,34 +69,34 @@ export default class Selector {
   }
 
   static fromContent(content) {
-    const noWhitespace = false, ///
-          selector = new Selector(content, noWhitespace);
+    const whitespace = true, ///
+          selector = new Selector(content, whitespace);
 
     return selector;
   }
 
   static fromNodeAndTokens(node, tokens) {
     const content = contentFromNodeAndTokens(node, tokens),
-          noWhitespace = noWhitespaceFromNode(node),
-          selector = new Selector(content, noWhitespace);
+          whitespace = whitespaceFromNode(node),
+          selector = new Selector(content, whitespace);
 
     return selector;
   }
 
   static fromSelectorString(selectorString) {
     const content = selectorString, ///
-          noWhitespace = false,
-          selector = new Selector(content, noWhitespace);
+          whitespace = true,
+          selector = new Selector(content, whitespace);
 
     return selector;
   }
 }
 
-function noWhitespaceFromNode(node) {
+function whitespaceFromNode(node) {
   const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node),
-        noWhitespace = (ruleNameTerminalNode === null);
+        whitespace = (ruleNameTerminalNode !== null);
 
-  return noWhitespace;
+  return whitespace;
 }
 
 function contentFromNodeAndTokens(node, tokens) {

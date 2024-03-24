@@ -18,12 +18,12 @@ export default class Selectors {
 
   forEachSelector(callback) { this.array.forEach(callback); }
 
-  combine(selectors) {
+  combine(selectors, outermost = false) {
     const outerSelectors = Selectors.fromArray(this.array), ///
           innerSelectors = selectors, ///
           array = outerSelectors.reduceSelector((array, outerSelector) => {
                   innerSelectors.forEachSelector((innerSelector) => {
-                    const selector = outerSelector.combine(innerSelector);
+                    const selector = outerSelector.combine(innerSelector, outermost);
 
                     if (selector !== null) {
                       array.push(selector);
@@ -31,9 +31,12 @@ export default class Selectors {
                   });
 
             return array;
-          }, []);
+          }, []),
+          length = array.length;
 
-    selectors = Selectors.fromArray(array);
+    selectors = (length === 0) ?
+                  null :
+                    Selectors.fromArray(array);
 
     return selectors;
   }

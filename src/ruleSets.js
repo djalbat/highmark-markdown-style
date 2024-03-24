@@ -14,7 +14,7 @@ export default class RuleSets {
 
   getLength() { return this.array.length; }
 
-  asCSS(selectorsList) {
+  asCSS(selectorsList, outermost = false) {
     let css = EMPTY_STRING;
 
     const length = this.getLength(),
@@ -22,7 +22,7 @@ export default class RuleSets {
 
     if ((length > 0) && (selectorsListLength > 0)) {
       css = this.array.reduce((css, ruleSet) => {
-        const ruleSetCSS = ruleSet.asCSS(selectorsList);
+        const ruleSetCSS = ruleSet.asCSS(selectorsList, outermost);
 
         css = (css === null) ?
                 ruleSetCSS :  ///

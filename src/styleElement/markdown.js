@@ -1,7 +1,7 @@
 "use strict";
 
+import Document from "../document";
 import StyleElement from "../styleElement";
-import MarkdownStyle from "../markdownStyle";
 import SelectorsList from "../selectorsList";
 import MarkdownStyleLexer from "../markdownStyle/lexer";
 import MarkdownStyleParser from "../markdownStyle/parser";
@@ -62,9 +62,9 @@ function cssFromMarkdownStyleAndSelectorsList(markdownStyle, selectorsList) {
         node = parser.parse(tokens);
 
   if (node !== null) {
-    const markdownStyle = MarkdownStyle.fromNodeTokensAndSelectorsList(node, tokens, selectorsList);
+    const document = Document.fromNodeTokensAndSelectorsList(node, tokens, selectorsList);
 
-    css = markdownStyle.asCSS();
+    css = document.asCSS();
   }
 
   return css;
