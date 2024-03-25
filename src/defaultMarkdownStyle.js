@@ -124,6 +124,7 @@ footnoteItem {
 
 link {
   font-size: 0.75em;
+  margin-left: 0.133333em;
   vertical-align: super;
 }
 
