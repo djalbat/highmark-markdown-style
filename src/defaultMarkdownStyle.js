@@ -108,12 +108,13 @@ stronglyEmphasisedText {
 }
 
 footnotesList {
+  font-size: 0.75em;
   border-top: 1px solid ${stormDust};
   padding-top: 1em;
 }
 
 footnoteItem {
-  margin-left: 1em;
+  margin-left: 1.333333em;
   
   paragraph {
     margin: 0;
