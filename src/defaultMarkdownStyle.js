@@ -110,11 +110,14 @@ stronglyEmphasisedText {
 footnotesList {
   border-top: 1px solid ${stormDust};
   padding-top: 1em;
-  list-style-type: none;
 }
 
-footnoteItem paragraph {
-  margin: 0;
+footnoteItem {
+  margin-left: 1em;
+  
+  paragraph {
+    margin: 0;
+  }
 }
 
 link {
