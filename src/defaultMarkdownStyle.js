@@ -108,12 +108,13 @@ stronglyEmphasisedText {
 }
 
 footnotesList {
-  font-size: 0.75em;
   border-top: 1px solid ${stormDust};
-  padding-top: 1.333333em;
+  padding-top: 1em;
 }
 
 footnoteItem {
+  font-size: 0.75em;
+  line-height: 1.25em;
   margin-left: 1.333333em;
   
   paragraph {
@@ -122,7 +123,8 @@ footnoteItem {
 }
 
 link {
-  font-size: 0.8em;
+  font-size: 0.75em;
+  line-height: 1.25em;
   vertical-align: super;
 }
 
