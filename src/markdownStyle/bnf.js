@@ -8,7 +8,7 @@ const bnf = `
     ruleSet..               ::=  selectorsList "{" ( ruleSet | declaration | nonsense )* "}" ;
     
     
-    declaration             ::=  [name] ":" values ";" ;
+    declaration             ::=  name ":" values ";" ;
 
     
     nonsense.               ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
@@ -35,10 +35,13 @@ const bnf = `
     values                  ::=  value+ ;
 
     
-    class                   ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>[name] ;
+    class                   ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>name ;
 
     
-    pseudoClass             ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>[name] ;
+    pseudoClass             ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>name ;
+    
+    
+    name                    ::=  ( [rule-name] | [name] ) ( <NO_WHITESPACE>"-"<NO_WHITESPACE>( [rule-name] | [name] ) )* ;
 
     
     value                   ::=  [name]<NO_WHITESPACE>"(" value ")"

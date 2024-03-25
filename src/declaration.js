@@ -4,7 +4,7 @@ import { COLOUR } from "./constants";
 import { nodeQuery } from "./utilities/query";
 import { contentFromNodeAndTokens } from "./utilities/content";
 
-const nameTerminalNodeQuery = nodeQuery("/*/@name"),
+const nameNonTerminalNodeQuery = nodeQuery("/*/name"),
       valuesNonTerminalNodeQuery = nodeQuery("/*/values");
 
 export default class Declaration {
@@ -29,11 +29,11 @@ export default class Declaration {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const nameTerminalNode = nameTerminalNodeQuery(node),
+    const nameNonTerminalNode = nameNonTerminalNodeQuery(node),
           valuesNonTerminalNode = valuesNonTerminalNodeQuery(node),
-          nameTerminalNodeContent = nameTerminalNode.getContent(),
+          nameNonTerminalNodeContent = contentFromNodeAndTokens(nameNonTerminalNode, tokens),
           valuesNonTerminalNodesContent = contentFromNodeAndTokens(valuesNonTerminalNode, tokens),
-          name = nameTerminalNodeContent, ///
+          name = nameNonTerminalNodeContent, ///
           values = valuesNonTerminalNodesContent, ///
           declaration = new Declaration(name, values);
 
