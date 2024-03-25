@@ -113,12 +113,12 @@ footnotesList {
 }
 
 footnoteItem {
-  font-size: 0.75em;
-  line-height: 1.25em;
-  margin-left: 1.333333em;
+  margin-left: 1em;
   
   paragraph {
     margin: 0;
+    font-size: 0.75em;
+    line-height: 1.25em;
   }
 }
 
