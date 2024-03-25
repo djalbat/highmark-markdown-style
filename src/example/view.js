@@ -105,8 +105,8 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `:first-child {
-  colour: red;
+  static initialMarkdownStyle = `footnoteItem paragraph {
+  margin: 0;
 }
 `;
 

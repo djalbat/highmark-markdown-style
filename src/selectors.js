@@ -1,91 +1,102 @@
 "use strict";
 
+import { arrayUtilities } from "necessary";
+
 import Selector from "./selector";
 
 import { nodesQuery } from "./utilities/query";
-import { EMPTY_STRING } from "./constants";
 
 const selectorNonTerminalNodesQuery = nodesQuery("/selectors/selector");
 
+const { first } = arrayUtilities;
+
 export default class Selectors {
-  constructor(array) {
-    this.array = array;
+  constructor(content, whitespace) {
+    this.content = content;
+    this.whitespace = whitespace;
   }
 
-  getLength() { return this.array.length; }
+  getContent() {
+    return this.content;
+  }
 
-  reduceSelector(callback, initialValue) { return this.array.reduce(callback, initialValue); }
-
-  forEachSelector(callback) { this.array.forEach(callback); }
+  hasWhitespace() {
+    return this.whitespace;
+  }
 
   combine(selectors, outermost = false) {
-    const outerSelectors = Selectors.fromArray(this.array), ///
+    const outerSelectors = this,  ///
           innerSelectors = selectors, ///
-          array = outerSelectors.reduceSelector((array, outerSelector) => {
-                  innerSelectors.forEachSelector((innerSelector) => {
-                    const selector = outerSelector.combine(innerSelector, outermost);
+          outerSelectorsContent = outerSelectors.getContent(),
+          innerSelectorsContent = innerSelectors.getContent(),
+          outerSelectorsWhitespace = outerSelectors.hasWhitespace(),
+          innerSelectorsWhitespace = innerSelectors.hasWhitespace();
 
-                    if (selector !== null) {
-                      array.push(selector);
-                    }
-                  });
+    selectors = null;
 
-            return array;
-          }, []),
-          length = array.length;
+    if (outermost && !innerSelectorsWhitespace) {
+      ///
+    } else {
+      if ((outerSelectorsContent !== null) && (innerSelectorsContent !== null)) {
+        const content = `${outerSelectorsContent}${innerSelectorsContent}`,
+              whitespace = outerSelectorsWhitespace;
 
-    selectors = (length === 0) ?
-                  null :
-                    Selectors.fromArray(array);
+        selectors = Selectors.fromContentAndWhitespace(content, whitespace);
+      }
+    }
 
     return selectors;
   }
 
   asCSS() {
-    let css = EMPTY_STRING;
-
-    const length = this.getLength();
-
-    if (length > 0) {
-      css = this.array.reduce((css, selector) => {
-        const selectorCSS = selector.asCSS();
-
-        css = (css === null) ?
-                selectorCSS : ///
-                  `${css} ${selectorCSS}`;
-
-        return css;
-      }, null);
-    }
+    const css = this.content; ///
 
     return css;
   }
 
-  static fromArray(array) {
-    const selectors = new Selectors(array);
-
-    return selectors;
-  }
-
   static fromNodeAndTokens(node, tokens) {
     const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
-          array = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
+          selectorArray = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
             const node = selectorNonTerminalNode,  ///
                   selector = Selector.fromNodeAndTokens(node, tokens);
 
             return selector;
           }),
-          selectors = new Selectors(array);
+          firstSelector = first(selectorArray),
+          selector = firstSelector, ///
+          content = selectorArray.reduce((content, selector) => {
+            const selectorContent = selector.getContent(),
+                  selectorWhitespace = selector.hasWhitespace();
+
+            if (content === null) {
+              content = selectorWhitespace ?
+                         ` ${selectorContent}` :
+                            `${selectorContent}`;
+            } else {
+              content = selectorWhitespace ?
+                         `${content} ${selectorContent}` :
+                            `${content}${selectorContent}`;
+            }
+
+            return content;
+          }, null),
+          whitespace = selector.hasWhitespace(),
+          selectors = new Selectors(content, whitespace);
 
     return selectors;
   }
 
   static fromSelectorString(selectorString) {
     const selector = Selector.fromSelectorString(selectorString),
-          array = [
-            selector
-          ],
-          selectors = new Selectors(array);
+          content = selector.getContent(),
+          whitespace = selector.hasWhitespace(),
+          selectors = new Selectors(content, whitespace);
+
+    return selectors;
+  }
+
+  static fromContentAndWhitespace(content, whitespace) {
+    const selectors = new Selectors(content, whitespace);
 
     return selectors;
   }

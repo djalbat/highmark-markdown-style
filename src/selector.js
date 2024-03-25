@@ -35,46 +35,6 @@ export default class Selector {
     return this.whitespace;
   }
 
-  combine(selector, outermost = true) {
-    const outerSelector = this, ///
-          innerSelector = selector, ///
-          innerSelectorContent = innerSelector.getContent();
-
-    let content = null;
-
-    if (innerSelectorContent !== null) {
-      const outerSelectorContent = outerSelector.getContent(),
-            innerSelectorWhitespace = innerSelector.hasWhitespace();
-
-      if (innerSelectorWhitespace) {
-        content = `${outerSelectorContent} ${innerSelectorContent}`;
-      } else {
-        if (!outermost) {
-          content = `${outerSelectorContent}${innerSelectorContent}`;
-        }
-      }
-    }
-
-    selector = (content === null) ?
-                  null :
-                    Selector.fromContent(content);
-
-    return selector;
-  }
-
-  asCSS() {
-    const css = this.content; ///
-
-    return css;
-  }
-
-  static fromContent(content) {
-    const whitespace = true, ///
-          selector = new Selector(content, whitespace);
-
-    return selector;
-  }
-
   static fromNodeAndTokens(node, tokens) {
     const content = contentFromNodeAndTokens(node, tokens),
           whitespace = whitespaceFromNode(node),
