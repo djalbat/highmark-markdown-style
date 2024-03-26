@@ -1,13 +1,11 @@
 "use strict";
 
 const defaultMarkdownStyle = `
-division {
-  colour: black;
-  padding: 1em;
-  min-height: 100%;
-  font-family: "Computer Modern Serif";
-  background-colour: white;
-}
+colour: black;
+padding: 1em;
+min-height: 100%;
+font-family: "Computer Modern Serif";
+background-colour: white;
   
 primaryHeading {
   font-size: 3em;

@@ -1,15 +1,23 @@
 "use strict";
 
 import RuleSets from "./ruleSets";
+import Declarations from "./declarations";
+
+import { EMPTY_STRING } from "./constants";
 
 export default class Division {
-  constructor(ruleSets, selectorsList) {
+  constructor(ruleSets, declarations, selectorsList) {
     this.ruleSets = ruleSets;
+    this.declarations = declarations;
     this.selectorsList = selectorsList;
   }
 
   getRuleSets() {
     return this.ruleSets;
+  }
+
+  getDeclarations() {
+    return this.declarations;
   }
 
   getSelectorsList() {
@@ -19,14 +27,19 @@ export default class Division {
   asCSS() {
     const outermost = true,
           ruleSetsCSS = this.ruleSets.asCSS(this.selectorsList, outermost),
-          css = ruleSetsCSS;  ///
+          declarationsCSS = this.declarations.asCSS(this.selectorsList, outermost),
+          css = (declarationsCSS === EMPTY_STRING) ?
+                  ruleSetsCSS : ///
+                    `${declarationsCSS}
+${ruleSetsCSS}`;
 
     return css;
   }
 
-  static fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList) {
-    const ruleSets = RuleSets.fromNodeTokensAndDivisionName(node, tokens, divisionName),
-          division = new Division(ruleSets, selectorsList);
+  static fromNodeTokensAndSelectorsList(node, tokens, selectorsList) {
+    const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
+          declarations = Declarations.fromNodeAndTokens(node, tokens),
+          division = new Division(ruleSets, declarations, selectorsList);
 
     return division;
   }

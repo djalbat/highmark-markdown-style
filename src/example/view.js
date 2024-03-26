@@ -36,8 +36,7 @@ class View extends Element {
   update() {
     const markdownStyleElement = this.getMarkdownStyleElement(),
           markdownStyle = this.getMarkdownStyle(),
-          divisionName = COVER_DIVISION_NAME,
-          css = markdownStyleElement.update(markdownStyle, divisionName);
+          css = markdownStyleElement.update(markdownStyle);
 
     this.setCSS(css);
 
@@ -108,7 +107,14 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `division {
+  static initialMarkdownStyle = `
+margin: 0;
+
+paragraph {
+  colour: red;
+}
+  
+division {
   margin: 0;
 }
 `;

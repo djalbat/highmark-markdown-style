@@ -83,25 +83,8 @@ ${selectorsCSS}`;
     return selectorsList;
   }
 
-  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
-    const selectorsListNonTerminalNode = selectorsListNonTerminalNodeQuery(node);
-
-    node = selectorsListNonTerminalNode;  ///
-
-    const selectorsNonTerminalNodes = selectorsNonTerminalNodesQuery(node),
-          array = selectorsNonTerminalNodes.map((selectorsNonTerminalNode) => {
-            const node = selectorsNonTerminalNode,  ///
-                  selectors = Selectors.fromNodeTokensAndDivisionName(node, tokens, divisionName);
-
-            return selectors;
-          }),
-          selectorsList = new SelectorsList(array);
-
-    return selectorsList;
-  }
-
-  static fromSelectorString(selectorString) {
-    const selectors = Selectors.fromSelectorString(selectorString),
+  static fromSelectorsString(selectorsString) {
+    const selectors = Selectors.fromSelectorsString(selectorsString),
           array = [
             selectors
           ],

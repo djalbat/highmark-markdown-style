@@ -23,8 +23,8 @@ export default class MarkdownStyleElement extends StyleElement {
     return this.selectorsList;
   }
 
-  update(markdownStyle, divisionName = null) {
-    const css = cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, this.selectorsList);
+  update(markdownStyle = null) {
+    const css = cssFromMarkdownStyleAndSelectorsList(markdownStyle, this.selectorsList);
 
     this.setCSS(css);
 
@@ -37,7 +37,7 @@ export default class MarkdownStyleElement extends StyleElement {
     this.update(markdownStyle)
   }
 
-  static fromSelectorString(Class, selectorString) {
+  static fromSelectorsString(Class, selectorString) {
     if (selectorString === undefined) {
       selectorString = Class; ///
 
@@ -45,14 +45,14 @@ export default class MarkdownStyleElement extends StyleElement {
     }
 
     const domElement = createDOMElement(),
-          selectorsList = SelectorsList.fromSelectorString(selectorString),
+          selectorsList = SelectorsList.fromSelectorsString(selectorString),
           markdownStyleElement = new Class(domElement, selectorsList);
 
     return markdownStyleElement;
   }
 }
 
-function cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, selectorsList) {
+function cssFromMarkdownStyleAndSelectorsList(markdownStyle, selectorsList) {
   let css = EMPTY_STRING;
 
   const lexer = markdownStyleLexer, ///
@@ -62,7 +62,7 @@ function cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisio
         node = parser.parse(tokens);
 
   if (node !== null) {
-    const division = Division.fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList);
+    const division = Division.fromNodeTokensAndSelectorsList(node, tokens, selectorsList);
 
     css = division.asCSS();
   }

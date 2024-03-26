@@ -2,7 +2,7 @@
 
 const bnf = `
 
-    style          ::=  ( ruleSet | error )+ ;
+    style          ::=  ( ruleSet | declaration | nonsense | error )+ ;
 
     
     ruleSet..      ::=  selectorsList "{" ( ruleSet | declaration | nonsense )* "}" ;

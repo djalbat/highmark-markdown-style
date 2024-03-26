@@ -36,33 +36,10 @@ export default class Selector {
     return this.whitespace;
   }
 
-  static fromSelectorString(selectorString) {
-    const content = selectorString, ///
-          whitespace = true,
-          selector = new Selector(content, whitespace);
-
-    return selector;
-  }
-
   static fromNodeAndTokens(node, tokens) {
     let selector = null;
 
-    const divisionName = null,
-          content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName);
-
-    if (content !== null) {
-      const whitespace = whitespaceFromNode(node);
-
-      selector = new Selector(content, whitespace);
-    }
-
-    return selector;
-  }
-
-  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
-    let selector = null;
-
-    const content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName);
+    const content = contentFromNodeAndTokens(node, tokens);
 
     if (content !== null) {
       const whitespace = whitespaceFromNode(node);
@@ -81,7 +58,7 @@ function whitespaceFromNode(node) {
   return whitespace;
 }
 
-function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null) {
+function contentFromNodeAndTokens(node, tokens) {
   let content;
 
   const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node);
@@ -102,11 +79,7 @@ function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null)
 
       switch (ruleName) {
         case DIVISION_RULE_NAME: {
-          if (divisionName !== null) {
-            const className = divisionName; ///
-
-            content = `${content}.${className}`;
-          }
+          content = null;
 
           break;
         }
@@ -134,12 +107,12 @@ function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null)
         content = `${content}.${className}`;
       }
 
-      const offset = 1,
-            remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
-
-      if ((ruleName === DIVISION_RULE_NAME) && (remainingContent !== EMPTY_STRING)) {
+      if (ruleName === DIVISION_RULE_NAME) {
         content = null;
       } else {
+        const offset = 1,
+              remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
+
         content = `${content}${remainingContent}`;
       }
     }

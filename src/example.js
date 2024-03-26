@@ -9,15 +9,15 @@ import { MarkdownStyleElement, DefaultMarkdownStyleElement } from "./index";  //
 
 import View from "./example/view";
 
-import { PREVIEW_PANE_SELECTOR_STRING } from "./example/constants";
+import { COVER_SELECTORS_STRING } from "./example/constants";
 
 const { renderStyles } = withStyle;
 
-const selectorString = PREVIEW_PANE_SELECTOR_STRING;
+const selectorSString = COVER_SELECTORS_STRING;
 
-DefaultMarkdownStyleElement.fromSelectorString(selectorString);
+DefaultMarkdownStyleElement.fromSelectorsString(selectorSString);
 
-const markdownStyleElement = MarkdownStyleElement.fromSelectorString(selectorString);
+const markdownStyleElement = MarkdownStyleElement.fromSelectorsString(selectorSString);
 
 renderStyles();
 

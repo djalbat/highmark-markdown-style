@@ -57,16 +57,14 @@ export default class Selectors {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const divisionName = null,
-          selectors = selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName);
+    const selectors = selectorsFromNodeAndTokens(node, tokens);
 
     return selectors;
   }
 
-  static fromSelectorString(selectorString) {
-    const selector = Selector.fromSelectorString(selectorString),
-          content = selector.getContent(),
-          whitespace = selector.hasWhitespace(),
+  static fromSelectorsString(selectorsString) {
+    const content = selectorsString,
+          whitespace = false,
           selectors = new Selectors(content, whitespace);
 
     return selectors;
@@ -77,21 +75,15 @@ export default class Selectors {
 
     return selectors;
   }
-
-  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
-    const selectors = selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName);
-
-    return selectors;
-  }
 }
 
-function selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName) {
+function selectorsFromNodeAndTokens(node, tokens) {
   let selectors = null;
 
   const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
         selectorArray = selectorNonTerminalNodes.reduce((selectorArray, selectorNonTerminalNode) => {
           const node = selectorNonTerminalNode,  ///
-                selector = Selector.fromNodeTokensAndDivisionName(node, tokens, divisionName);
+                selector = Selector.fromNodeAndTokens(node, tokens);
 
           if (selector !== null) {
             selectorArray.push(selector);
