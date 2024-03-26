@@ -45,18 +45,30 @@ export default class Selector {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const divisionName = null,
-          content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName),
-          whitespace = whitespaceFromNode(node),
-          selector = new Selector(content, whitespace);
+    let selector = null;
+
+    const divisionNames = null,
+          content = contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+
+    if (content !== null) {
+      const whitespace = whitespaceFromNode(node);
+
+      selector = new Selector(content, whitespace);
+    }
 
     return selector;
   }
 
-  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
-    const content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName),
-          whitespace = whitespaceFromNode(node),
-          selector = new Selector(content, whitespace);
+  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+    let selector = null;
+
+    const content = contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+
+    if (content !== null) {
+      const whitespace = whitespaceFromNode(node);
+
+      selector = new Selector(content, whitespace);
+    }
 
     return selector;
   }
@@ -69,71 +81,75 @@ function whitespaceFromNode(node) {
   return whitespace;
 }
 
-function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null) {
-  let content = EMPTY_STRING;
+function contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames = null) {
+  let content;
 
   const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node);
 
-  let offset = 0;
-
   if (ruleNameTerminalNode !== null) {
+    content = EMPTY_STRING;
+
     const ruleNameTerminalNodeContent = ruleNameTerminalNode.getContent(),
           ruleName = ruleNameTerminalNodeContent, ///
           html = ruleNameToHTMLMap[ruleName] || null;
 
-    if (html === null) {
-      content = null;
-    } else {
-      if (html !== null) {
-        const { tagName, className } = html;
+    if (html !== null) {
+      const { tagName, className } = html;
 
-        if (tagName !== null) {
-          content = `${content}${tagName}`;
-        }
+      if (tagName !== null) {
+        content = `${content}${tagName}`;
+      }
 
-        switch (ruleName) {
-          case DIVISION_RULE_NAME: {
-            if (divisionName !== null) {
+      switch (ruleName) {
+        case DIVISION_RULE_NAME: {
+          if (divisionNames !== null) {
+            divisionNames.forEach((divisionName) => {
               const className = divisionName; ///
 
               content = `${content}.${className}`;
-            }
-
-            break;
+            });
           }
 
-          case STRONGLY_EMPHASISED_TEXT_RULE_NAME: {
-            content = `${content} > ${strongTextTagName}`;
-
-            break;
-          }
-
-          case ORDERED_LIST_ITEM_RULE_NAME: {
-            content = `${orderedListTagName} > ${content}`;
-
-            break;
-          }
-
-          case UNORDERED_LIST_ITEM_RULE_NAME: {
-            content = `${unorderedListTagName} > ${content}`;
-
-            break;
-          }
+          break;
         }
 
-        if (className !== null) {
-          content = `${content}.${className}`;
+        case ORDERED_LIST_ITEM_RULE_NAME: {
+          content = `${orderedListTagName} > ${content}`;
+
+          break;
+        }
+
+        case UNORDERED_LIST_ITEM_RULE_NAME: {
+          content = `${unorderedListTagName} > ${content}`;
+
+          break;
+        }
+
+        case STRONGLY_EMPHASISED_TEXT_RULE_NAME: {
+          content = `${content} > ${strongTextTagName}`;
+
+          break;
         }
       }
 
-      offset = 1;
+      if (className !== null) {
+        content = `${content}.${className}`;
+      }
+
+      const offset = 1,
+            remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
+
+      if ((ruleName === DIVISION_RULE_NAME) && (remainingContent !== EMPTY_STRING)) {
+        content = null;
+      } else {
+        content = `${content}${remainingContent}`;
+      }
     }
-  }
+  } else {
+    const offset = 0,
+          remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
 
-  if (content !== null) {
-    const remainingContent = remainingContentFromNodeTokensAndOffset(node, tokens, offset);
-
-    content = `${content}${remainingContent}`;
+    content = remainingContent; ///
   }
 
   return content;

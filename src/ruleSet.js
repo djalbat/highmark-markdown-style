@@ -46,10 +46,10 @@ ${ruleSetsCSS}`;
     return ruleSet;
   }
 
-  static fromRuleSetsNodeTokensAndDivisionName(RuleSets, node, tokens, divisionName) {
+  static fromRuleSetsNodeTokensAndDivisionNames(RuleSets, node, tokens, divisionNames) {
     const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
           declarations = Declarations.fromNodeAndTokens(node, tokens),
-          selectorsList = SelectorsList.fromNodeTokensAndDivisionName(node, tokens, divisionName),
+          selectorsList = SelectorsList.fromNodeTokensAndDivisionNames(node, tokens, divisionNames),
           ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
 
     return ruleSet;

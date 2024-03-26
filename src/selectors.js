@@ -25,23 +25,25 @@ export default class Selectors {
   }
 
   combine(selectors, outermost = false) {
-    const outerSelectors = this,  ///
-          innerSelectors = selectors, ///
-          outerSelectorsContent = outerSelectors.getContent(),
-          innerSelectorsContent = innerSelectors.getContent(),
-          outerSelectorsWhitespace = outerSelectors.hasWhitespace(),
-          innerSelectorsWhitespace = innerSelectors.hasWhitespace();
+    if (selectors !== null) {
+      const outerSelectors = this,  ///
+            innerSelectors = selectors, ///
+            outerSelectorsContent = outerSelectors.getContent(),
+            innerSelectorsContent = innerSelectors.getContent(),
+            outerSelectorsWhitespace = outerSelectors.hasWhitespace(),
+            innerSelectorsWhitespace = innerSelectors.hasWhitespace();
 
-    selectors = null;
+      selectors = null;
 
-    if (outermost && !innerSelectorsWhitespace) {
-      ///
-    } else {
-      if ((outerSelectorsContent !== null) && (innerSelectorsContent !== null)) {
-        const content = `${outerSelectorsContent}${innerSelectorsContent}`,
-              whitespace = outerSelectorsWhitespace;
+      if (outermost && !innerSelectorsWhitespace) {
+        ///
+      } else {
+        if ((outerSelectorsContent !== null) && (innerSelectorsContent !== null)) {
+          const content = `${outerSelectorsContent}${innerSelectorsContent}`,
+                whitespace = outerSelectorsWhitespace;
 
-        selectors = Selectors.fromContentAndWhitespace(content, whitespace);
+          selectors = Selectors.fromContentAndWhitespace(content, whitespace);
+        }
       }
     }
 
@@ -55,65 +57,8 @@ export default class Selectors {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
-          selectorArray = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
-            const node = selectorNonTerminalNode,  ///
-                  selector = Selector.fromNodeAndTokens(node, tokens);
-
-            return selector;
-          }),
-          firstSelector = first(selectorArray),
-          selector = firstSelector, ///
-          content = selectorArray.reduce((content, selector) => {
-            const selectorContent = selector.getContent(),
-                  selectorWhitespace = selector.hasWhitespace();
-
-            if (content === null) {
-              content = selectorWhitespace ?
-                         ` ${selectorContent}` :
-                           `${selectorContent}`;
-            } else {
-              content = selectorWhitespace ?
-                         `${content} ${selectorContent}` :
-                           `${content}${selectorContent}`;
-            }
-
-            return content;
-          }, null),
-          whitespace = selector.hasWhitespace(),
-          selectors = new Selectors(content, whitespace);
-
-    return selectors;
-  }
-
-  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
-    const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
-          selectorArray = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
-            const node = selectorNonTerminalNode,  ///
-                  selector = Selector.fromNodeTokensAndDivisionName(node, tokens, divisionName);
-
-            return selector;
-          }),
-          firstSelector = first(selectorArray),
-          selector = firstSelector, ///
-          content = selectorArray.reduce((content, selector) => {
-            const selectorContent = selector.getContent(),
-                  selectorWhitespace = selector.hasWhitespace();
-
-            if (content === null) {
-              content = selectorWhitespace ?
-                         ` ${selectorContent}` :
-                            `${selectorContent}`;
-            } else {
-              content = selectorWhitespace ?
-                         `${content} ${selectorContent}` :
-                            `${content}${selectorContent}`;
-            }
-
-            return content;
-          }, null),
-          whitespace = selector.hasWhitespace(),
-          selectors = new Selectors(content, whitespace);
+    const divisionNames = null,
+          selectors = selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
 
     return selectors;
   }
@@ -132,4 +77,53 @@ export default class Selectors {
 
     return selectors;
   }
+
+  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+    const selectors = selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+
+    return selectors;
+  }
+}
+
+function selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+  let selectors = null;
+
+  const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
+        selectorArray = selectorNonTerminalNodes.reduce((selectorArray, selectorNonTerminalNode) => {
+          const node = selectorNonTerminalNode,  ///
+                selector = Selector.fromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+
+          if (selector !== null) {
+            selectorArray.push(selector);
+          }
+
+          return selectorArray;
+        }, []),
+        selectorsArrayLength = selectorArray.length;
+
+  if (selectorsArrayLength > 0) {
+    const firstSelector = first(selectorArray),
+          selector = firstSelector, ///
+          content = selectorArray.reduce((content, selector) => {
+            const selectorContent = selector.getContent(),
+                  selectorWhitespace = selector.hasWhitespace();
+
+            if (content === null) {
+              content = selectorWhitespace ?
+                         ` ${selectorContent}` :
+                           `${selectorContent}`;
+            } else {
+              content = selectorWhitespace ?
+                         `${content} ${selectorContent}` :
+                           `${content}${selectorContent}`;
+            }
+
+            return content;
+          }, null),
+          whitespace = selector.hasWhitespace();
+
+    selectors = new Selectors(content, whitespace);
+  }
+
+  return selectors;
 }
