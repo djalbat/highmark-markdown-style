@@ -2,61 +2,61 @@
 
 const bnf = `
 
-    document                ::=  ( ruleSet | error )+ ;
+    style          ::=  ( ruleSet | error )+ ;
 
     
-    ruleSet..               ::=  selectorsList "{" ( ruleSet | declaration | nonsense )* "}" ;
+    ruleSet..      ::=  selectorsList "{" ( ruleSet | declaration | nonsense )* "}" ;
     
     
-    declaration             ::=  name ":" values ";" ;
+    declaration    ::=  name ":" values ";" ;
 
     
-    nonsense.               ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
+    nonsense.      ::=  [string-literal] | [escaped] | [rule-name] | [number] | [colour] | [unit] | [name] | [special] | [unassigned] ;
 
 
-    error.                  ::=  . ;
+    error.         ::=  . ;
 
 
-    selectorsList           ::=  selectors ( "," selectors )* ;
+    selectorsList  ::=  selectors ( "," selectors )* ;
 
 
-    selectors               ::=  selector+ ;
+    selectors      ::=  selector+ ;
 
 
-    selector                ::=  [rule-name] class* pseudoClass* 
+    selector       ::=  [rule-name] class* pseudoClass* 
     
-                              |  class+ pseudoClass*
+                     |  class+ pseudoClass*
 
-                              |  pseudoClass+
+                     |  pseudoClass+
 
-                              ;
-
-    
-    values                  ::=  value+ ;
+                     ;
 
     
-    class                   ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>name ;
+    values         ::=  value+ ;
 
     
-    pseudoClass             ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>name ;
-    
-    
-    name                    ::=  ( [rule-name] | [name] ) ( <NO_WHITESPACE>"-"<NO_WHITESPACE>( [rule-name] | [name] ) )* ;
+    class          ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>name ;
 
     
-    value                   ::=  [name]<NO_WHITESPACE>"(" value ")"
+    pseudoClass    ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>name ;
     
-                              |  [number]<NO_WHITESPACE>[unit]
     
-                              |  [string-literal] 
+    name           ::=  ( [rule-name] | [name] ) ( <NO_WHITESPACE>"-"<NO_WHITESPACE>( [rule-name] | [name] ) )* ;
+
+    
+    value          ::=  [name]<NO_WHITESPACE>"(" value ")"
+    
+                     |  [number]<NO_WHITESPACE>[unit]
+    
+                     |  [string-literal] 
                               
-                              |  [number]
+                     |  [number]
                               
-                              |  [colour]
+                     |  [colour]
                               
-                              |  [name] 
+                     |  [name] 
                               
-                              ;
+                     ;
 
 `;
 
