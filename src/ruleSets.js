@@ -55,11 +55,11 @@ export default class RuleSets {
     return ruleSets;
   }
 
-  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
     const ruleSetNonTerminalNodes = ruleSetNonTerminalNodesQuery(node),
           array = ruleSetNonTerminalNodes.map((ruleSetNonTerminalNode) => {
             const node = ruleSetNonTerminalNode, ///
-                  ruleSet = RuleSet.fromRuleSetsNodeTokensAndDivisionNames(RuleSets, node, tokens, divisionNames);
+                  ruleSet = RuleSet.fromRuleSetsNodeTokensAndDivisionName(RuleSets, node, tokens, divisionName);
 
             return ruleSet;
           }),

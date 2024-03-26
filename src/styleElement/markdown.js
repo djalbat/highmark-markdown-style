@@ -23,8 +23,8 @@ export default class MarkdownStyleElement extends StyleElement {
     return this.selectorsList;
   }
 
-  update(markdownStyle, divisionNames = null) {
-    const css = cssFromMarkdownStyleDivisionNamesAndSelectorsList(markdownStyle, divisionNames, this.selectorsList);
+  update(markdownStyle, divisionName = null) {
+    const css = cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, this.selectorsList);
 
     this.setCSS(css);
 
@@ -52,7 +52,7 @@ export default class MarkdownStyleElement extends StyleElement {
   }
 }
 
-function cssFromMarkdownStyleDivisionNamesAndSelectorsList(markdownStyle, divisionNames, selectorsList) {
+function cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, selectorsList) {
   let css = EMPTY_STRING;
 
   const lexer = markdownStyleLexer, ///
@@ -62,7 +62,7 @@ function cssFromMarkdownStyleDivisionNamesAndSelectorsList(markdownStyle, divisi
         node = parser.parse(tokens);
 
   if (node !== null) {
-    const division = Division.fromNodeTokensDivisionNamesAndSelectorsList(node, tokens, divisionNames, selectorsList);
+    const division = Division.fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList);
 
     css = division.asCSS();
   }

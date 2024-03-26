@@ -83,7 +83,7 @@ ${selectorsCSS}`;
     return selectorsList;
   }
 
-  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
     const selectorsListNonTerminalNode = selectorsListNonTerminalNodeQuery(node);
 
     node = selectorsListNonTerminalNode;  ///
@@ -91,7 +91,7 @@ ${selectorsCSS}`;
     const selectorsNonTerminalNodes = selectorsNonTerminalNodesQuery(node),
           array = selectorsNonTerminalNodes.map((selectorsNonTerminalNode) => {
             const node = selectorsNonTerminalNode,  ///
-                  selectors = Selectors.fromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+                  selectors = Selectors.fromNodeTokensAndDivisionName(node, tokens, divisionName);
 
             return selectors;
           }),

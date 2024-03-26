@@ -47,8 +47,8 @@ export default class Selector {
   static fromNodeAndTokens(node, tokens) {
     let selector = null;
 
-    const divisionNames = null,
-          content = contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+    const divisionName = null,
+          content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName);
 
     if (content !== null) {
       const whitespace = whitespaceFromNode(node);
@@ -59,10 +59,10 @@ export default class Selector {
     return selector;
   }
 
-  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
     let selector = null;
 
-    const content = contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+    const content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName);
 
     if (content !== null) {
       const whitespace = whitespaceFromNode(node);
@@ -81,7 +81,7 @@ function whitespaceFromNode(node) {
   return whitespace;
 }
 
-function contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames = null) {
+function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null) {
   let content;
 
   const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node);
@@ -102,12 +102,10 @@ function contentFromNodeTokensAndDivisionNames(node, tokens, divisionNames = nul
 
       switch (ruleName) {
         case DIVISION_RULE_NAME: {
-          if (divisionNames !== null) {
-            divisionNames.forEach((divisionName) => {
-              const className = divisionName; ///
+          if (divisionName !== null) {
+            const className = divisionName; ///
 
-              content = `${content}.${className}`;
-            });
+            content = `${content}.${className}`;
           }
 
           break;

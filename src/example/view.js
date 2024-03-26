@@ -14,7 +14,7 @@ import ParseTreeTextarea from "./view/textarea/parseTree";
 import MarkdownStyleTextarea from "./view/textarea/markdownStyle";
 import LexicalEntriesTextarea from "./view/textarea/lexicalEntries";
 
-import { COVER_DIVISION_NAME, DOCUMENT_DIVISION_NAME } from "./constants";
+import { COVER_DIVISION_NAME } from "./constants";
 
 const { bnf } = MarkdownStyleParser,
       { entries } = MarkdownStyleLexer;
@@ -36,11 +36,8 @@ class View extends Element {
   update() {
     const markdownStyleElement = this.getMarkdownStyleElement(),
           markdownStyle = this.getMarkdownStyle(),
-          divisionNames = [
-            DOCUMENT_DIVISION_NAME,
-            COVER_DIVISION_NAME
-          ],
-          css = markdownStyleElement.update(markdownStyle, divisionNames);
+          divisionName = COVER_DIVISION_NAME,
+          css = markdownStyleElement.update(markdownStyle, divisionName);
 
     this.setCSS(css);
 

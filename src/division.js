@@ -24,8 +24,8 @@ export default class Division {
     return css;
   }
 
-  static fromNodeTokensDivisionNamesAndSelectorsList(node, tokens, divisionNames, selectorsList) {
-    const ruleSets = RuleSets.fromNodeTokensAndDivisionNames(node, tokens, divisionNames),
+  static fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList) {
+    const ruleSets = RuleSets.fromNodeTokensAndDivisionName(node, tokens, divisionName),
           division = new Division(ruleSets, selectorsList);
 
     return division;

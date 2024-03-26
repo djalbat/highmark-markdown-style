@@ -57,8 +57,8 @@ export default class Selectors {
   }
 
   static fromNodeAndTokens(node, tokens) {
-    const divisionNames = null,
-          selectors = selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+    const divisionName = null,
+          selectors = selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName);
 
     return selectors;
   }
@@ -78,20 +78,20 @@ export default class Selectors {
     return selectors;
   }
 
-  static fromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
-    const selectors = selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
+    const selectors = selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName);
 
     return selectors;
   }
 }
 
-function selectorsFromNodeTokensAndDivisionNames(node, tokens, divisionNames) {
+function selectorsFromNodeTokensAndDivisionName(node, tokens, divisionName) {
   let selectors = null;
 
   const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
         selectorArray = selectorNonTerminalNodes.reduce((selectorArray, selectorNonTerminalNode) => {
           const node = selectorNonTerminalNode,  ///
-                selector = Selector.fromNodeTokensAndDivisionNames(node, tokens, divisionNames);
+                selector = Selector.fromNodeTokensAndDivisionName(node, tokens, divisionName);
 
           if (selector !== null) {
             selectorArray.push(selector);
