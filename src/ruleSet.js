@@ -45,4 +45,13 @@ ${ruleSetsCSS}`;
 
     return ruleSet;
   }
+
+  static fromRuleSetsNodeTokensAndDivisionName(RuleSets, node, tokens, divisionName) {
+    const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
+          declarations = Declarations.fromNodeAndTokens(node, tokens),
+          selectorsList = SelectorsList.fromNodeTokensAndDivisionName(node, tokens, divisionName),
+          ruleSet = new RuleSet(ruleSets, declarations, selectorsList);
+
+    return ruleSet;
+  }
 }

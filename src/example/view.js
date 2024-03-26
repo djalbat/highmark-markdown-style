@@ -105,7 +105,7 @@ class View extends Element {
     this.update();
   }
 
-  static initialMarkdownStyle = `footnoteItem paragraph {
+  static initialMarkdownStyle = `division {
   margin: 0;
 }
 `;

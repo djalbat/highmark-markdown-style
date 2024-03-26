@@ -1,16 +1,12 @@
 "use strict";
 
-import { colours } from "occam-styles";
-
-const { woodsmoke, springWood, stormDust, pomegranate } = colours;
-
 const defaultMarkdownStyle = `
-document {
-  colour: ${woodsmoke};
+division {
+  colour: black;
   padding: 1em;
   min-height: 100%;
   font-family: "Computer Modern Serif";
-  background-colour: ${springWood};
+  background-colour: white;
 }
   
 primaryHeading {
@@ -76,8 +72,8 @@ inlineListing {
 
 blockListing,
 inlineListing {
-  colour: ${springWood};
-  background-colour: ${woodsmoke};
+  colour: white;
+  background-colour: black;
   font-family: "Computer Modern Typewriter";
 }
 
@@ -86,7 +82,7 @@ table {
 }
 
 tableHead {
-  border: 1px solid ${woodsmoke};
+  border: 1px solid black;
 }
 
 tableBodyCell,
@@ -108,7 +104,7 @@ stronglyEmphasisedText {
 }
 
 footnotesList {
-  border-top: 1px solid ${stormDust};
+  border-top: 1px solid black;
   padding-top: 1em;
 }
 
@@ -129,7 +125,7 @@ link {
 }
 
 error {
-  text-decoration: underline ${pomegranate};
+  text-decoration: underline red;
 }
 `;
 

@@ -1,6 +1,6 @@
 "use strict";
 
-import Document from "../document";
+import Division from "../division";
 import StyleElement from "../styleElement";
 import SelectorsList from "../selectorsList";
 import MarkdownStyleLexer from "../markdownStyle/lexer";
@@ -23,8 +23,8 @@ export default class MarkdownStyleElement extends StyleElement {
     return this.selectorsList;
   }
 
-  update(markdownStyle) {
-    const css = cssFromMarkdownStyleAndSelectorsList(markdownStyle, this.selectorsList);
+  update(markdownStyle, divisionName = null) {
+    const css = cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, this.selectorsList);
 
     this.setCSS(css);
 
@@ -52,7 +52,7 @@ export default class MarkdownStyleElement extends StyleElement {
   }
 }
 
-function cssFromMarkdownStyleAndSelectorsList(markdownStyle, selectorsList) {
+function cssFromMarkdownStyleDivisionNameAndSelectorsList(markdownStyle, divisionName, selectorsList) {
   let css = EMPTY_STRING;
 
   const lexer = markdownStyleLexer, ///
@@ -62,9 +62,9 @@ function cssFromMarkdownStyleAndSelectorsList(markdownStyle, selectorsList) {
         node = parser.parse(tokens);
 
   if (node !== null) {
-    const document = Document.fromNodeTokensAndSelectorsList(node, tokens, selectorsList);
+    const division = Division.fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList);
 
-    css = document.asCSS();
+    css = division.asCSS();
   }
 
   return css;

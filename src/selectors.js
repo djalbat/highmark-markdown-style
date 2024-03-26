@@ -71,6 +71,38 @@ export default class Selectors {
             if (content === null) {
               content = selectorWhitespace ?
                          ` ${selectorContent}` :
+                           `${selectorContent}`;
+            } else {
+              content = selectorWhitespace ?
+                         `${content} ${selectorContent}` :
+                           `${content}${selectorContent}`;
+            }
+
+            return content;
+          }, null),
+          whitespace = selector.hasWhitespace(),
+          selectors = new Selectors(content, whitespace);
+
+    return selectors;
+  }
+
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
+    const selectorNonTerminalNodes = selectorNonTerminalNodesQuery(node),
+          selectorArray = selectorNonTerminalNodes.map((selectorNonTerminalNode) => {
+            const node = selectorNonTerminalNode,  ///
+                  selector = Selector.fromNodeTokensAndDivisionName(node, tokens, divisionName);
+
+            return selector;
+          }),
+          firstSelector = first(selectorArray),
+          selector = firstSelector, ///
+          content = selectorArray.reduce((content, selector) => {
+            const selectorContent = selector.getContent(),
+                  selectorWhitespace = selector.hasWhitespace();
+
+            if (content === null) {
+              content = selectorWhitespace ?
+                         ` ${selectorContent}` :
                             `${selectorContent}`;
             } else {
               content = selectorWhitespace ?

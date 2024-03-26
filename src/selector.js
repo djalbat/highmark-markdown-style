@@ -6,7 +6,8 @@ import { nodeQuery } from "./utilities/query";
 import { EMPTY_STRING } from "./constants";
 import { remainingContentFromNodeTokensAndOffset } from "./utilities/content";
 
-const { STRONG_TEXT_RULE_NAME,
+const { DIVISION_RULE_NAME,
+        STRONG_TEXT_RULE_NAME,
         ORDERED_LIST_RULE_NAME,
         UNORDERED_LIST_RULE_NAME,
         ORDERED_LIST_ITEM_RULE_NAME,
@@ -35,17 +36,26 @@ export default class Selector {
     return this.whitespace;
   }
 
+  static fromSelectorString(selectorString) {
+    const content = selectorString, ///
+          whitespace = true,
+          selector = new Selector(content, whitespace);
+
+    return selector;
+  }
+
   static fromNodeAndTokens(node, tokens) {
-    const content = contentFromNodeAndTokens(node, tokens),
+    const divisionName = null,
+          content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName),
           whitespace = whitespaceFromNode(node),
           selector = new Selector(content, whitespace);
 
     return selector;
   }
 
-  static fromSelectorString(selectorString) {
-    const content = selectorString, ///
-          whitespace = true,
+  static fromNodeTokensAndDivisionName(node, tokens, divisionName) {
+    const content = contentFromNodeTokensAndDivisionName(node, tokens, divisionName),
+          whitespace = whitespaceFromNode(node),
           selector = new Selector(content, whitespace);
 
     return selector;
@@ -59,7 +69,7 @@ function whitespaceFromNode(node) {
   return whitespace;
 }
 
-function contentFromNodeAndTokens(node, tokens) {
+function contentFromNodeTokensAndDivisionName(node, tokens, divisionName = null) {
   let content = EMPTY_STRING;
 
   const ruleNameTerminalNode = ruleNameTerminalNodeQuery(node);
@@ -82,6 +92,16 @@ function contentFromNodeAndTokens(node, tokens) {
         }
 
         switch (ruleName) {
+          case DIVISION_RULE_NAME: {
+            if (divisionName !== null) {
+              const className = divisionName; ///
+
+              content = `${content}.${className}`;
+            }
+
+            break;
+          }
+
           case STRONGLY_EMPHASISED_TEXT_RULE_NAME: {
             content = `${content} > ${strongTextTagName}`;
 

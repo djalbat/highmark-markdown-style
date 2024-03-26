@@ -2,7 +2,7 @@
 
 import RuleSets from "./ruleSets";
 
-export default class Document {
+export default class Division {
   constructor(ruleSets, selectorsList) {
     this.ruleSets = ruleSets;
     this.selectorsList = selectorsList;
@@ -24,10 +24,10 @@ export default class Document {
     return css;
   }
 
-  static fromNodeTokensAndSelectorsList(node, tokens, selectorsList) {
-    const ruleSets = RuleSets.fromNodeAndTokens(node, tokens),
-          document = new Document(ruleSets, selectorsList);
+  static fromNodeTokensDivisionNameAndSelectorsList(node, tokens, divisionName, selectorsList) {
+    const ruleSets = RuleSets.fromNodeTokensAndDivisionName(node, tokens, divisionName),
+          division = new Division(ruleSets, selectorsList);
 
-    return document;
+    return division;
   }
 }
