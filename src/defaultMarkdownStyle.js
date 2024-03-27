@@ -109,6 +109,8 @@ footnotesList {
 }
 
 footnoteItem {
+  font-size: 9pt;
+  line-height: 12pt;
   margin-left: 12pt;
   
   paragraph {
