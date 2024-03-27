@@ -2,24 +2,24 @@
 
 const defaultMarkdownStyle = `
 colour: black;
-padding: 1em;
+padding: 12pt;
 min-height: 100%;
 font-family: "Computer Modern Serif";
 background-colour: white;
   
 primaryHeading {
-  font-size: 3em;
-  margin: 0.333333em 0 0.333333em 0;
+  font-size: 32pt;
+  margin: 12pt 0 12pt 0;
 }
 
 secondaryHeading {
-  font-size: 2em;
-  margin: 0.5em 0 0.5em 0;
+  font-size: 24pt;
+  margin: 12pt 0 12pt 0;
 }
 
 tertiaryHeading {
-  font-size: 1.5em;
-  margin: 0.75em 0 0.75em 0;
+  font-size: 16pt;
+  margin: 12pt 0 12pt 0;
 }
 
 table,
@@ -28,13 +28,13 @@ orderedList,
 unorderedList,
 blockListing,
 quaternaryHeading {
-  font-size: 1em;
-  margin: 1em 0 1em 0;
+  font-size: 12pt;
+  margin: 12pt 0 12pt 0;
 }
 
 orderedListItem,
 unorderedListItem {
-  margin: 0.5em 0 0.5em 0;
+  margin: 6pt 0 6pt 0;z
 }
 
 table,
@@ -65,7 +65,7 @@ quaternaryHeading {
 }
 
 inlineListing {
-  font-size: 1em;
+  font-size: 12pt;
 }
 
 blockListing,
@@ -80,12 +80,12 @@ table {
 }
 
 tableHead {
-  border: 1px solid black;
+  border: 1pt solid black;
 }
 
 tableBodyCell,
 tableHeadCell {
-  padding: 1em;
+  padding: 12pt;
 }
 
 strongText {
@@ -102,23 +102,23 @@ stronglyEmphasisedText {
 }
 
 footnotesList {
-  border-top: 1px solid black;
-  padding-top: 1em;
+  border-top: 1pt solid black;
+  padding-top: 12pt;
 }
 
 footnoteItem {
-  margin-left: 1.333333em;
-  font-size: 0.75em;
+  margin-left: 12pt;
+  font-size: 9pt;
   
   paragraph {
     margin: 0;
-    line-height: 1.25em;
+    line-height: 12pt;
   }
 }
 
 link {
-  font-size: 0.75em;
-  margin-left: 0.133333em;
+  font-size: 9p3;
+  margin-left: 3pt;
   vertical-align: super;
 }
 
