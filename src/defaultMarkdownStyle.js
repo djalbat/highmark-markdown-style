@@ -29,6 +29,7 @@ unorderedList,
 blockListing,
 quaternaryHeading {
   font-size: 12pt;
+  line-height: 15pt;
   margin: 12pt 0 12pt 0;
 }
 
@@ -66,6 +67,7 @@ quaternaryHeading {
 
 inlineListing {
   font-size: 12pt;
+  line-height: 15pt;
 }
 
 blockListing,
@@ -108,16 +110,17 @@ footnotesList {
 
 footnoteItem {
   margin-left: 12pt;
-  font-size: 9pt;
   
   paragraph {
     margin: 0;
+    font-size: 9pt;
     line-height: 12pt;
   }
 }
 
 link {
-  font-size: 9p3;
+  font-size: 9pt;
+  line-height: 12pt;
   margin-left: 3pt;
   vertical-align: super;
 }
