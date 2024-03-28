@@ -35,10 +35,10 @@ const bnf = `
     values         ::=  value+ ;
 
     
-    class          ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>name ;
+    class          ::=  <NO_WHITESPACE>"."<NO_WHITESPACE>identifier ;
 
     
-    pseudoClass    ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>name ;
+    pseudoClass    ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>identifier ;
     
     
     name           ::=  identifier ;
