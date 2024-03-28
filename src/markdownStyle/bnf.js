@@ -44,7 +44,7 @@ const bnf = `
     name           ::=  identifier ;
 
     
-    value          ::=  identifier ( <NO_WHITESPACE>"(" value ")" )?
+    value          ::=  identifier ( <NO_WHITESPACE>"(" arguments ")" )?
     
                      |  [number]<NO_WHITESPACE>[unit]
     
@@ -54,6 +54,22 @@ const bnf = `
                               
                      |  [colour]
                               
+                     ;
+                     
+
+    arguments      ::=  argument ( "," argument )* ;
+    
+
+    argument       ::=  identifier
+    
+                     |  [number]<NO_WHITESPACE>[unit]
+    
+                     |  [string-literal] 
+                              
+                     |  [number]
+                              
+                     |  [colour]
+                     
                      ;
 
 
