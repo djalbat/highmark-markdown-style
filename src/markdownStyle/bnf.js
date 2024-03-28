@@ -41,10 +41,10 @@ const bnf = `
     pseudoClass    ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>name ;
     
     
-    name           ::=  ( [rule-name] | [name] ) ( <NO_WHITESPACE>"-"<NO_WHITESPACE>( [rule-name] | [name] ) )* ;
+    name           ::=  identifier ;
 
     
-    value          ::=  [name]<NO_WHITESPACE>"(" value ")"
+    value          ::=  identifier ( <NO_WHITESPACE>"(" value ")" )?
     
                      |  [number]<NO_WHITESPACE>[unit]
     
@@ -54,10 +54,12 @@ const bnf = `
                               
                      |  [colour]
                               
-                     |  [name] 
-                              
                      ;
 
+
+    identifier     ::=  ( [rule-name] | [name] ) ( <NO_WHITESPACE>"-"<NO_WHITESPACE>( [rule-name] | [name] ) )* ;
+
+    
 `;
 
 export default bnf;
