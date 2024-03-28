@@ -41,10 +41,10 @@ const bnf = `
     pseudoClass    ::=  <NO_WHITESPACE>":"<NO_WHITESPACE>identifier ;
     
     
-    name           ::=  identifier ;
+    name.          ::=  identifier ;
 
     
-    value          ::=  identifier ( <NO_WHITESPACE>"(" arguments ")" )?
+    value.         ::=  identifier ( <NO_WHITESPACE>"(" arguments ")" )?
     
                      |  [number]<NO_WHITESPACE>[unit]
     
